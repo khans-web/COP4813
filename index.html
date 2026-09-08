@@ -1,15 +1,104 @@
 <!DOCTYPE html>
-<html>
-  <head>
-     <title>Hello World</title>
-  </head>
-  <body>
-     <h1>Hello World</h1>
-    <br>
-     <p>
-        Welcome to my page. This website showcases my work and projects my COP 4813 course. Stay turned as I continue to develop my web development skills and expand this page throughout the course.
-     </p>
-     </br>
-     <footer>Created by Naushad Khan</footer>
-  </body>
+<html> 
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Home page for Naushad Khan's Web Development Portfolio">
+  <title>Naushad Khan's Web Development Portfolio</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<h1>Naushad Khan's Web Development Portfolio</h1>
+
+<ul id="sddm">
+
+    <li>
+        <a href="index.html"
+           onmouseover="mopen('m1')"
+           onmouseout="mclosetime()">Home</a>
+        <div id="m1"
+             onmouseover="mcancelclosetime()"
+             onmouseout="mclosetime()">
+        </div>
+    </li>
+
+    <li>
+        <a href="#"
+           onmouseover="mopen('m2')"
+           onmouseout="mclosetime()">Courses</a>
+        <div id="m2"
+             onmouseover="mcancelclosetime()"
+             onmouseout="mclosetime()">
+            <a href="webprogramming.html">Web Programming</a>
+        </div>
+    </li>
+
+    <li>
+        <a href="#"
+           onmouseover="mopen('m3')"
+           onmouseout="mclosetime()">Assignment</a>
+        <div id="m3"
+             onmouseover="mcancelclosetime()"
+             onmouseout="mclosetime()">
+            <a href="assignment1/index.html">Assignment 1</a>
+            <a href="index.html">Assignment 2</a>
+        </div>
+    </li>
+
+</ul>
+
+<br>
+
+<img src="web-development.jpeg"
+     alt="HTML, CSS, and JavaScript">
+
+<p>
+    Welcome to my page. This website showcases my work and projects
+    for my COP 4813 course using HTML, CSS, and JavaScript. Stay tuned
+    as I continue to develop my web development skills and expand this
+    page throughout the course.
+</p>
+
+<footer>
+    Created by Naushad Khan, 2026
+</footer>
+
+<script>
+    var closetimer = 0;
+    var ddmenuitem = 0;
+
+    function mopen(id) {
+        mcancelclosetime();
+
+        if (ddmenuitem) {
+            ddmenuitem.style.visibility = 'hidden';
+        }
+
+        ddmenuitem = document.getElementById(id);
+        ddmenuitem.style.visibility = 'visible';
+    }
+
+    function mclose() {
+        if (ddmenuitem) {
+            ddmenuitem.style.visibility = 'hidden';
+        }
+    }
+
+    function mclosetime() {
+        closetimer = window.setTimeout(mclose, 1000);
+    }
+
+    function mcancelclosetime() {
+        if (closetimer) {
+            window.clearTimeout(closetimer);
+            closetimer = null;
+        }
+    }
+
+    document.onclick = mclose;
+</script>
+
+</body>
 </html>
+
+
