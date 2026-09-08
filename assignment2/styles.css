@@ -1,0 +1,120 @@
+/* Page styling */
+body {
+font-family: Arial, sans-serif;
+margin: 40px;
+text-align: center;
+background-color: white;
+}
+
+/* Main heading */
+h1 {
+color: #1E3A8A;
+}
+
+/* Main Unordered List Styling */
+#sddm {
+position: relative;
+margin: 20px auto;
+padding: 0;
+list-style: none;
+z-index: 1000;
+display: inline-block;
+}
+
+/* Float list items to the left */
+#sddm li {
+float: left;
+list-style: none;
+}
+
+/* Top-level menu anchor tags */
+#sddm li a {
+display: block;
+padding: 8px 15px;
+color: white;
+background: #2563EB;
+text-decoration: none;
+border-right: 1px solid white;
+}
+
+/* Hover effect for top-level menu items */
+#sddm li a:hover {
+background: #1E40AF;
+}
+
+/* Dropdown menu div container */
+#sddm div {
+position: absolute;
+visibility: hidden;
+margin: 0;
+padding: 0;
+background: white;
+border: 1px solid #2563EB;
+z-index: 1001;
+}
+
+/* Sub-menu anchor tags inside the dropdown div */
+#sddm div a {
+display: block;
+padding: 5px 10px;
+color: #1E3A8A;
+background: transparent;
+white-space: nowrap;
+text-decoration: none;
+border-right: none;
+}
+
+/* Hover effect for sub-menu items */
+#sddm div a:hover {
+background: #2563EB;
+color: white;
+}
+
+/* Main image */
+body img {
+display: block;
+width: 400px;
+max-width: 100%;
+height: auto;
+margin: 30px auto;
+}
+
+/* Welcome message */
+body p {
+max-width: 700px;
+margin: 30px auto;
+font-size: 18px;
+line-height: 1.6;
+}
+
+/* Footer */
+footer {
+margin-top: 40px;
+padding: 20px;
+color: #1E3A8A;
+}
+
+/* Progress list */
+.progress {
+width: 250px;
+margin: 20px auto;
+text-align: left;
+}
+
+/* Resources list */
+.resources {
+width: 400px;
+margin: 20px auto;
+text-align: left;
+}
+
+/* Resource links */
+.resources a {
+color: #2563EB;
+text-decoration: none;
+}
+
+.resources a:hover {
+color: #1E40AF;
+text-decoration: underline;
+}
