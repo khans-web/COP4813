@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html> 
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Confirmation page for k’s Web Development Portfolio">
+  <title>Assignment 3 - Confirmation</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<h1>Assignment 3: Review Your Selection</h1>
+
+<!-- Navigation Menu -->
+<ul id="sddm">
+    <li>
+        <a href="index.html" onmouseover="mopen('m1')" onmouseout="mclosetime()">Home</a>
+        <div id="m1" onmouseover="mcancelclosetime()" onmouseout="mclosetime()"></div>
+    </li>
+    <li>
+        <a href="#" onmouseover="mopen('m2')" onmouseout="mclosetime()">Courses</a>
+        <div id="m2" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
+            <a href="webprogramming.html">Web Programming</a>
+        </div>
+    </li>
+    <li>
+        <a href="#" onmouseover="mopen('m3')" onmouseout="mclosetime()">Assignment</a>
+        <div id="m3" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
+            <a href="assignment1/index.html">Assignment 1</a>
+            <a href="index.html">Assignment 2</a>
+            <a href="form.html">Assignment 3 (Form)</a>
+        </div>
+    </li>
+</ul>
+
+<br>
+
+<h2>Please review your selections below:</h2>
+
+<div class="form-box">
+    <h3>Personal Information</h3>
+    <p><strong>Name:</strong> <span id="display-firstname"></span> <span id="display-lastname"></span></p>
+    <p><strong>Email:</strong> <span id="display-email"></span></p>
+    <p><strong>Phone:</strong> <span id="display-phone"></span></p>
+    <p><strong>Birth Date:</strong> <span id="display-dob"></span></p>
+</div>
+
+<div class="form-box">
+    <h3>Mailing Address</h3>
+    <p><strong>Street:</strong> <span id="display-address"></span></p>
+    <p><strong>City:</strong> <span id="display-city"></span></p>
+    <p><strong>State:</strong> <span id="display-state"></span></p>
+    <p><strong>Zip Code:</strong> <span id="display-zip"></span></p>
+</div>
+
+<div class="form-box">
+    <h3>Your Message</h3>
+    <p><span id="display-message"></span></p>
+</div>
+
+<div class="form-box">
+    <h3>Is this information correct?</h3>
+    <button type="button" onclick="confirmSubmission(true)" style="background-color: green; color: white; padding: 10px 20px; font-size: 16px; cursor: pointer;">True (Send Mail)</button>
+    <button type="button" onclick="confirmSubmission(false)" style="background-color: red; color: white; padding: 10px 20px; font-size: 16px; cursor: pointer; margin-left: 10px;">False (Go Back)</button>
+</div>
+
+<footer>
+    Created by Naushad Khan for COP 4813, 2026
+</footer>
+
+<script>
+    // Navigation dropdown script
+    var closetimer = 0;
+    var ddmenuitem = 0;
+
+    function mopen(id) {
+        mcancelclosetime();
+        if (ddmenuitem) {
+            ddmenuitem.style.visibility = 'hidden';
+        }
+        ddmenuitem = document.getElementById(id);
+        ddmenuitem.style.visibility = 'visible';
+    }
+
+    function mclose() {
+        if (ddmenuitem) {
+            ddmenuitem.style.visibility = 'hidden';
+        }
+    }
+
+    function mclosetime() {
+        closetimer = window.setTimeout(mclose, 1000);
+    }
+
+    function mcancelclosetime() {
+        if (closetimer) {
+            window.clearTimeout(closetimer);
+            closetimer = null;
+        }
+    }
+
+    document.onclick = mclose;
+
+    // Read URL parameters passed from form.html
+    const urlParams = new URLSearchParams(window.location.search);
+
+    document.getElementById('display-firstname').textContent = urlParams.get('firstname') || 'N/A';
+    document.getElementById('display-lastname').textContent = urlParams.get('lastname') || 'N/A';
+    document.getElementById('display-email').textContent = urlParams.get('email') || 'N/A';
+    document.getElementById('display-phone').textContent = urlParams.get('phone') || 'N/A';
+    
+    var month = urlParams.get('month') || '';
+    var day = urlParams.get('day') || '';
+    var year = urlParams.get('year') || '';
+    document.getElementById('display-dob').textContent = month + '/' + day + '/' + year;
+
+    document.getElementById('display-address').textContent = urlParams.get('address') || 'N/A';
+    document.getElementById('display-city').textContent = urlParams.get('city') || 'N/A';
+    document.getElementById('display-state').textContent = urlParams.get('state') || 'N/A';
+    document.getElementById('display-zip').textContent = urlParams.get('zip') || 'N/A';
+    document.getElementById('display-message').textContent = urlParams.get('message') || 'None provided';
+
+    // True/False choice function
+    function confirmSubmission(isTrue) {
+        if (isTrue) {
+            // Build mailto link with all data
+            var mailtoLink = "mailto:your-email@example.com?subject=Assignment 3 Submission&body=" +
+                "Name: " + urlParams.get('firstname') + " " + urlParams.get('lastname') + "%0D%0A" +
+                "Email: " + urlParams.get('email') + "%0D%0A" +
+                "Phone: " + urlParams.get('phone') + "%0D%0A" +
+                "DOB: " + month + "/" + day + "/" + year + "%0D%0A" +
+                "Address: " + urlParams.get('address') + ", " + urlParams.get('city') + ", " + urlParams.get('state') + " " + urlParams.get('zip') + "%0D%0A" +
+                "Message: " + urlParams.get('message');
+            
+            window.location.href = mailtoLink;
+        } else {
+            // Send user back to the form to fix mistakes
+            window.location.href = "form.html";
+        }
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html> 
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Home page for Naushad Khan's Web Development Portfolio">
+  <title>Naushad Khan's Web Development Portfolio</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+
+<h1>Assignment 3: Interactive Form</h1>
+
+<!-- Navigation Menu -->
+<ul id="sddm">
+    <li>
+        <a href="index.html" onmouseover="mopen('m1')" onmouseout="mclosetime()">Home</a>
+        <div id="m1" onmouseover="mcancelclosetime()" onmouseout="mclosetime()"></div>
+    </li>
+    <li>
+        <a href="#" onmouseover="mopen('m2')" onmouseout="mclosetime()">Courses</a>
+        <div id="m2" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
+            <a href="webprogramming.html">Web Programming</a>
+        </div>
+    </li>
+    <li>
+        <a href="#" onmouseover="mopen('m3')" onmouseout="mclosetime()">Assignment</a>
+        <div id="m3" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
+            <a href="assignment1/index.html">Assignment 1</a>
+            <a href="index.html">Assignment 2</a>
+            <a href="form.html">Assignment 3 (Form)</a>
+        </div>
+    </li>
+</ul>
+
+<br>
+
+<h2>Please fill out the information below:</h2>
+
+<form action="confirmation.html" method="GET" onsubmit="return validateForm()">
+
+    <!-- Personal Information Box -->
+    <div class="form-box">
+        <h3>Personal Information</h3>
+        
+        <label for="firstname">Full Name:</label><br>
+        <input type="text" id="firstname" name="firstname" placeholder="First" required>
+        <input type="text" id="lastname" name="lastname" placeholder="Last" required><br><br>
+
+        <label for="email">Email Address:</label><br>
+        <input type="email" id="email" name="email" placeholder="name@domain.extension" required><br><br>
+
+        <label for="phone">Phone Number:</label><br>
+        <input type="tel" id="phone" name="phone" placeholder="(000)000-0000" required><br><br>
+
+        <label>Birth Date:</label><br>
+        <input type="text" id="month" name="month" placeholder="mm" maxlength="2" size="3" required> /
+        <input type="text" id="day" name="day" placeholder="dd" maxlength="2" size="3" required> /
+        <input type="text" id="year" name="year" placeholder="yyyy" maxlength="4" size="5" required>
+    </div>
+
+    <!-- Mailing Address Box -->
+    <div class="form-box">
+        <h3>Mailing Address</h3>
+        
+        <label for="address">Street Address:</label><br>
+        <input type="text" id="address" name="address" placeholder="123 Main St" required><br><br>
+
+        <label for="city">City:</label><br>
+        <input type="text" id="city" name="city" placeholder="City" required><br><br>
+
+        <label for="state">State:</label><br>
+        <input type="text" id="state" name="state" placeholder="State" maxlength="2" size="5" required><br><br>
+
+        <label for="zip">Zip Code:</label><br>
+        <input type="text" id="zip" name="zip" placeholder="Zip" maxlength="5" size="7" required>
+    </div>
+
+    <!-- Message Box -->
+    <div class="form-box">
+        <h3>Your Message</h3>
+        
+        <label for="message">Message:</label><br>
+        <textarea id="message" name="message" rows="5" cols="40" placeholder="Type your message here..."></textarea>
+    </div>
+
+    <!-- Security Check Box -->
+    <div class="form-box">
+        <h3>Security Check</h3>
+        <label for="security">Security Question: Type the word 'AI' backwards:</label><br>
+        <input type="text" id="security" name="security" placeholder="Answer here" required>
+    </div>
+
+    <!-- Submit Section Box -->
+    <div class="form-box">
+        <button type="submit">Submit Assignment</button>
+    </div>
+
+</form>
+
+<footer>
+    Created by Naushad Khan for COP 4813, 2026
+</footer>
+
+<script>
+    var closetimer = 0;
+    var ddmenuitem = 0;
+
+    function mopen(id) {
+        mcancelclosetime();
+        if (ddmenuitem) {
+            ddmenuitem.style.visibility = 'hidden';
+        }
+        ddmenuitem = document.getElementById(id);
+        ddmenuitem.style.visibility = 'visible';
+    }
+
+    function mclose() {
+        if (ddmenuitem) {
+            ddmenuitem.style.visibility = 'hidden';
+        }
+    }
+
+    function mclosetime() {
+        closetimer = window.setTimeout(mclose, 1000);
+    }
+
+    function mcancelclosetime() {
+        if (closetimer) {
+            window.clearTimeout(closetimer);
+            closetimer = null;
+        }
+    }
+
+    document.onclick = mclose;
+
+    function validateForm() {
+        var firstname = document.getElementById('firstname').value.trim();
+        var lastname = document.getElementById('lastname').value.trim();
+        if (firstname === "" || lastname === "") {
+            alert("First and last names cannot be blank.");
+            return false;
+        }
+
+        var email = document.getElementById('email').value.trim();
+        var emailStyle = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailStyle.test(email)) {
+            alert("Please enter a valid email address in the format: name@domain.extension");
+            return false;
+        }
+
+        var phoneValue = document.getElementById('phone').value;
+        var phoneStyle = /^\([0-9]{3}\)[0-9]{3}-[0-9]{4}$/;
+        if (!phoneStyle.test(phoneValue)) {
+            alert("Please enter a valid phone number in the format: (000)000-0000");
+            return false;
+        }
+
+        var month = parseInt(document.getElementById('month').value);
+        var day = parseInt(document.getElementById('day').value);
+        var year = parseInt(document.getElementById('year').value);
+        
+        var inputDate = new Date(year, month - 1, day);
+        var today = new Date();
+
+        if (inputDate > today) {
+            alert("Birth date cannot be in the future!");
+            return false;
+        }
+
+        var state = document.getElementById('state').value.trim();
+        var zip = document.getElementById('zip').value.trim();
+        var statePattern = /^[A-Za-z]{2}$/;
+        var zipPattern = /^[0-9]{5}$/;
+
+        if (!statePattern.test(state)) {
+            alert("Please enter a valid 2-letter state abbreviation.");
+            return false;
+        }
+        if (!zipPattern.test(zip)) {
+            alert("Please enter a valid 5-digit zip code.");
+            return false;
+        }
+
+        var securityValue = document.getElementById('security').value.trim().toLowerCase();
+        if (securityValue !== "ia") {
+            alert("Incorrect security answer! Please type the word 'IA' backwards.");
+            return false;
+        }
+
+        return true;
+    }
+</script>
+
+</body>
+</html>

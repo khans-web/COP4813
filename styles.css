@@ -117,4 +117,84 @@ text-decoration: none;
 .resources a:hover {
 color: #1E40AF;
 text-decoration: underline;
+}" 
+
+/* --- Form and Confirmation Page Styles --- */
+
+/* Form section boxes with a stronger blue background */
+.form-box {
+    background-color: #bfdbfe;
+    border: 1px solid #60a5fa;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 600px;
+    text-align: left;
+}
+
+/* Headings inside form boxes */
+.form-box h3 {
+    color: #1E3A8A;
+    margin-top: 0;
+    border-bottom: 2px solid #2563EB;
+    padding-bottom: 5px;
+}
+
+/* Input fields and textareas */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+textarea {
+    width: 100%;
+    padding: 8px 12px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #93c5fd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+}
+
+/* Input focus effect */
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+textarea:focus {
+    outline: none;
+    border-color: #2563EB;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* Form labels */
+label {
+    font-weight: bold;
+    color: #1E3A8A;
+}
+
+/* Submit and Action Buttons */
+button[type="submit"], 
+.form-box button {
+    background-color: #2563EB;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Button Hover Effect */
+button[type="submit"]:hover,
+.form-box button:hover {
+    background-color: #1E40AF;
+}
+
+/* Confirmation page text layout */
+.form-box p {
+    margin: 10px 0;
+    font-size: 16px;
+    text-align: left;
+    max-width: none;
+    color: #334155;
 }
