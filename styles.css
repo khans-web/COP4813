@@ -2,7 +2,7 @@
 body {
 font-family: Arial, sans-serif;
 margin: 40px;
-text-align: center;
+text-align: center; margin: 40px;
 background-color: white;
 }
 
@@ -197,4 +197,68 @@ button[type="submit"]:hover,
     text-align: left;
     max-width: none;
     color: #334155;
+}
+
+/* Assignment 4 specific styles */
+
+/* --- Assignment 4: Doppler Calculator & Graph Styles --- */
+
+/* --- Assignment 4: Doppler Calculator & Graph Styles --- */
+
+.calc-card {
+    max-width: 480px;
+    margin: 20px auto;
+    text-align: center;
+    line-height: 2.5;
+}
+
+.calc-card input[type="text"] {
+    width: 70px !important;
+    display: inline-block !important;
+    margin-left: 8px;
+    text-align: center;
+    padding: 6px 10px;
+    border: 1px solid #94a3b8;
+    border-radius: 4px;
+    font-family: Arial, sans-serif;
+}
+
+.calc-card input[type="button"] {
+    background-color: #2563EB;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    margin: 10px 5px;
+    width: auto !important;
+    transition: background-color 0.2s ease;
+}
+
+.calc-card input[type="button"]:hover {
+    background-color: #1E40AF;
+}
+
+/* Professional Chart Container Wrapper */
+#container {
+    max-width: 600px;
+    height: 450px;
+    margin: 30px auto;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    padding: 15px;
+}
+
+/* Text Output Box Styling */
+#output {
+    max-width: 480px;
+    margin: 20px auto;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: left;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
 }

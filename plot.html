@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html> 
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Assignment 4 of Naushad Khan's Web Development Portfolio">
+  <title>Assignment 4 - Doppler Equation Calculator</title>
+
+  <!-- $ selector comes up as not defined without jquery library -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+        body { text-align: center; margin: 40px; }
+        .calc-inputs { line-height: 2.2; margin: 20px auto; }
+  </style>
+
+</head>
+<body>
+
+    <h1>Assignment 4: Doppler Effect Calculator</h1>
+
+<!-- Navigation Menu -->
+<ul id="sddm">
+
+    <li>
+        <a href="index.html"
+           onmouseover="mopen('m1')"
+           onmouseout="mclosetime()">Home</a>
+        <div id="m1"
+             onmouseover="mcancelclosetime()"
+             onmouseout="mclosetime()">
+        </div>
+    </li>
+
+    <li>
+        <a href="#"
+           onmouseover="mopen('m2')"
+           onmouseout="mclosetime()">Courses</a>
+        <div id="m2"
+             onmouseover="mcancelclosetime()"
+             onmouseout="mclosetime()">
+            <a href="webprogramming.html">Web Programming</a>
+        </div>
+    </li>
+
+    <li>
+        <a href="#"
+           onmouseover="mopen('m3')"
+           onmouseout="mclosetime()">Assignment</a>
+        <div id="m3"
+             onmouseover="mcancelclosetime()"
+             onmouseout="mclosetime()">
+            <a href="assignment1/index.html">Assignment 1</a>
+            <a href="index.html">Assignment 2</a>
+            <a href="form.html">Assignment 3</a>
+            <a href="plot.html">Assignment 4</a>
+        </div>
+    </li>
+
+</ul>
+
+<br>
+
+    <p>Formula: f = f<sub>0</sub> * (v<sub>m</sub> ± v<sub>r</sub>) / (v<sub>m</sub> ∓  v<sub>s</sub>)</p>
+    <br>
+
+    <div class="form-box calc-card">
+    Source Frequency (f<sub>0</sub>) <input type="text" id="f" size="5" value="500"/> Hz<br><br>
+    Speed of Wave (v<sub>m</sub>) <input type="text" id="v" size="5" value="343" /> m/s<br><br>
+    Speed of Wave Source (v<sub>s</sub>) <input type="text" id="vs" size="5" value="30"/> m/s<br><br>
+    Speed of Receiver (v<sub>r</sub>) <input type="text" id="vr" size="5" value="0"/> m/s<br><br>
+    Distance Min <input type="text" id="xmin" value="-100" size="5"/> m<br><br>
+    Distance Max <input type="text" id="xmax" value="100" size="5" /> m<br><br>
+    
+    <div style="text-align: center;">
+            <input type="button" value="Calculate" id="calculate" />
+            <input type="button" value="Plot" id="plot" />
+        </div>
+    </div>
+
+    <!-- Results Display Output Box -->
+    <div id="output" class="form-box" style="max-width: 450px; margin: 20px auto;"></div>  
+
+    <!-- Graph Container -->
+    <div id="container" style="max-width: 600px; height: 450px; margin: 30px auto; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 15px; box-sizing: border-box;"></div>
+
+    
+    <p><a href="index.html">&larr; Back to Portfolio Home</a></p>
+
+    <footer>
+        Created by Naushad Khan for COP 4813, 2026
+    </footer>
+
+    
+
+<script>
+
+    var closetimer = 0;
+    var ddmenuitem = 0;
+
+    function mopen(id) {
+        mcancelclosetime();
+
+        if (ddmenuitem) {
+            ddmenuitem.style.visibility = 'hidden';
+        }
+
+        ddmenuitem = document.getElementById(id);
+        ddmenuitem.style.visibility = 'visible';
+    }
+
+    function mclose() {
+        if (ddmenuitem) {
+            ddmenuitem.style.visibility = 'hidden';
+        }
+    }
+
+    function mclosetime() {
+        closetimer = window.setTimeout(mclose, 1000);
+    }
+
+    function mcancelclosetime() {
+        if (closetimer) {
+            window.clearTimeout(closetimer);
+            closetimer = null;
+        }
+    }
+
+    document.onclick = mclose;
+
+// Global variables
+
+var f, v, vs, vr, xmin, xmax;
+var n = 0;
+var x = new Array();
+var y = new Array(); 
+var vData = new Array();
+var chart;
+
+function calculateDoppler(xt) {
+    var numer, denom;
+    
+    // When Approaching numerator uses +vr (receiver moving toward source), Denominator uses -vs (source moving toward receiver);
+    // When Receding numerator uses -vr (receiver moving away), Denominator uses +vs (source moving away);
+
+    if (xt < 0) {
+        numer = v + vr;
+        denom = v - vs;
+    } else {
+        numer = v - vr;
+        denom = v + vs;
+    }
+
+    var observedF = f * (numer / denom);
+    return observedF;
+}
+
+function calculate() {
+
+  // using jquery to find associated input  id and grab the input values through .val
+    f = Number($('#f').val());
+    v = Number($('#v').val());
+    vs = Number($('#vs').val());
+    vr = Number($('#vr').val());
+    xmin = Number($('#xmin').val());
+    xmax = Number($('#xmax').val());
+    
+    x = [];
+    y = [];
+    vData = [];
+    
+    var i = 0;
+    // Step by step along positions from xmin to xmax
+    for (var xt = xmin; xt <= xmax; xt += 10) {
+        x[i] = xt;
+        y[i] = calculateDoppler(xt);
+        vData[i] = [x[i], y[i]];
+        i++;
+    }
+    n = i - 1;
+}
+
+function displayValues() {
+   var solution = "";
+    
+   solution = "<b>Source Frequency:</b> " + f + " Hz | <b>Wave Speed:</b> " + v + " m/s | <b>Receiver Speed:</b> " + vr + " m/s<br/><br/>";
+   
+   for (var i = 0; i <= n; i++) {
+       solution += " Position X = " + x[i] + " m -> Frequency = " + y[i].toFixed(0) + " Hz<br/>";       
+   }
+   
+   document.getElementById('output').innerHTML = solution;
+}
+
+function plotValues() {
+   calculate();
+   chart = new Highcharts.Chart({
+        chart: {
+            renderTo: 'container',
+            type: 'line',
+            marginRight: 130,
+            marginBottom: 25
+        },
+        title: {
+            text: 'Doppler Equation',
+            x: -20 //center
+        },
+        xAxis: {
+            title: {
+                text: 'Source Position (m)'
+            }
+        },
+        yAxis: {
+            title: {
+                text: 'Frequency (Hz)'
+            }   
+        }, 
+        series: [{
+            name: 'Frequency Shift',
+            color: 'rgba(223, 83, 83, .8)',
+            data: vData
+        }]                
+   });      
+}
+
+$('#calculate').click( function() {
+     calculate();
+     displayValues();    
+});
+
+$('#plot').click( function() {
+     calculate();
+     plotValues();   
+});
+
+</script>
+
+</body>
+</html>
