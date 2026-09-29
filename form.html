@@ -5,9 +5,92 @@
   <meta name="description" content="Home page for Naushad Khan's Web Development Portfolio">
   <title>Naushad Khan's Web Development Portfolio</title>
   <link rel="stylesheet" href="styles.css">
+<style>
+        /* Light blue background for this page */
+        body {
+            background-color: #e0f2fe; 
+        }
+
+        /* Form container layout */
+        form {
+            max-width: 650px;
+            margin: 30px auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Form boxes styled to match the dark box aesthetic */
+        .form-box {
+            background-color: #2c3e50; /* Darker box background */
+            color: #ffffff;            /* White text inside dark boxes */
+            border: 3px solid #1a252f; /* Solid dark border */
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            box-sizing: border-box;
+        }
+
+        .form-box h3 {
+            margin-top: 0;
+            color: #ffffff;
+            border-bottom: 2px solid #34495e;
+            padding-bottom: 8px;
+        }
+
+        /* High visibility labels */
+        label {
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        /* Clean input and textarea styling */
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        textarea {
+            padding: 8px;
+            margin-top: 5px;
+            border-radius: 4px;
+            border: 1px solid #bdc3c7;
+            background-color: #ffffff;
+            color: #333333;
+            box-sizing: border-box;
+        }
+
+        input#firstname, input#lastname {
+            width: 48%;
+            display: inline-block;
+        }
+
+        input#email, input#address, input#city, input#security {
+            width: 100%;
+        }
+
+        textarea#message {
+            width: 100%;
+        }
+
+        /* Submit button styling matching the spirograph theme */
+        button[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #2980b9;
+        }
+    </style>
 </head>
 <body>
-
 
 <h1>Assignment 3: Interactive Form</h1>
 
@@ -28,14 +111,16 @@
         <div id="m3" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
             <a href="assignment1/index.html">Assignment 1</a>
             <a href="index.html">Assignment 2</a>
-            <a href="form.html">Assignment 3 (Form)</a>
+            <a href="form.html">Assignment 3</a>
+            <a href="plot.html">Assignment 4</a>
+            <a href="spirograph.html">Assignment 5</a>
         </div>
     </li>
 </ul>
 
 <br>
 
-<h2>Please fill out the information below:</h2>
+<h2 style="text-align: center; color: #2c3e50;">Please fill out the information below:</h2>
 
 <form action="confirmation.html" method="GET" onsubmit="return validateForm()">
 
