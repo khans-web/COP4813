@@ -1,0 +1,504 @@
+<!DOCTYPE html> 
+<html> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Ballon d'Or Legends Ranking Table for Naushad Khan's Web Development Portfolio">
+    <title>Ballon d'Or Legends Ranking Table using JSON - Naushad Khan's Web Development Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Light blue background matching portfolio reference */
+        body {
+            background-color: #e0f2fe;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            max-width: 1000px;
+            margin: 30px auto 10px auto;
+            text-align: center;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        /* Navigation menu styling matching user's SDDM reference */
+        #sddm {
+            margin: 0 auto;
+            padding: 0;
+            list-style: none;
+            background-color: #2c3e50;
+            border-radius: 4px;
+            display: inline-block;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        #sddm li {
+            position: relative;
+            display: inline-block;
+        }
+
+        #sddm li a {
+            display: block;
+            padding: 10px 20px;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        #sddm li a:hover {
+            background-color: #34495e;
+            border-radius: 4px;
+        }
+
+        /* Main container matching the dark box aesthetic */
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 0 15px;
+            box-sizing: border-box;
+        }
+
+        .form-box {
+            background-color: #2c3e50;
+            color: #ffffff;
+            border: 3px solid #1a252f;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            box-sizing: border-box;
+        }
+
+        .form-box h3 {
+            margin-top: 0;
+            color: #ffffff;
+            border-bottom: 2px solid #34495e;
+            padding-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .intro-text {
+            color: #ffffff;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 0;
+        }
+
+        /* Table layout styling */
+        .table-responsive {
+            overflow-x: auto;
+            margin-top: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 14px 16px;
+        }
+
+        th {
+            background-color: #1a252f;
+            color: #ffffff;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid #34495e;
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.2s;
+        }
+
+        th:hover {
+            background-color: #34495e;
+            color: #3498db;
+        }
+
+        tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        tr:hover {
+            background-color: rgba(52, 152, 219, 0.15);
+            cursor: pointer;
+        }
+
+        td {
+            border-bottom: 1px solid #34495e;
+            font-size: 14px;
+            color: #ecf0f1;
+        }
+
+        .text-right { text-align: right; }
+        .text-center { text-align: center; }
+
+        /* Button styles */
+        button.btn-action {
+            padding: 6px 14px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 12px;
+            transition: background-color 0.2s;
+        }
+
+        button.btn-action:hover {
+            background-color: #2980b9;
+        }
+
+        .btn-vote {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 15px;
+            margin-top: 10px;
+            transition: background-color 0.2s;
+            text-align: center;
+        }
+
+        .btn-vote:hover {
+            background-color: #2980b9;
+        }
+
+        /* Modal popup overlay */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-box {
+            background-color: #2c3e50;
+            color: #ffffff;
+            border: 3px solid #1a252f;
+            border-radius: 8px;
+            padding: 25px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #bdc3c7;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .modal-close:hover {
+            color: #ffffff;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #7f8c8d;
+            font-size: 13px;
+            margin-top: 40px;
+            border-top: 1px solid #cbd5e1;
+        }
+    </style>
+</head>
+<body>
+
+<ul id="sddm">
+
+    <li>
+        <a href="index.html"
+           onmouseover="mopen('m1')"
+           onmouseout="mclosetime()">Home</a>
+        <div id="m1"
+             onmouseover="mcancelclosetime()"
+             onmouseout="mclosetime()">
+        </div>
+    </li>
+
+    <li>
+        <a href="#"
+           onmouseover="mopen('m2')"
+           onmouseout="mclosetime()">Courses</a>
+        <div id="m2"
+             onmouseover="mcancelclosetime()"
+             onmouseout="mclosetime()">
+            <a href="webprogramming.html">Web Programming</a>
+        </div>
+    </li>
+
+    <li>
+        <a href="#"
+           onmouseover="mopen('m3')"
+           onmouseout="mclosetime()">Assignment</a>
+        <div id="m3"
+             onmouseover="mcancelclosetime()"
+             onmouseout="mclosetime()">
+            <a href="assignment1/index.html">Assignment 1</a>
+            <a href="index.html">Assignment 2</a>
+            <a href="form.html">Assignment 3 - Form</a>
+            <a href="plot.html">Assignment 4 - Plot</a>
+            <a href="spirograph.html">Assignment 5 - Spirograph</a>
+            <a href="json.html">Assignment 6 - JSON</a>
+        </div>
+    </li>
+
+</ul>
+
+<br>
+
+    <div class="container">
+        <div class="form-box">
+            <h3>About the Ballon d'Or </h3>
+            <p class="intro-text" style="color: #ffffff !important;">
+                The Ballon d'Or is an annual football award presented by French news magazine France Football that is widely regarded as the most prestigious individual honor in world football. Established in 1956, it honors the standout footballer who performed best over the previous season. 
+                <br><br>
+                The purpose of this ranking table is to showcase iconic multiple Ballon d'Or winners and legendary figures across football history. You can click on any table column header to sort the players. Data is sourced from a JSON file.
+            </p>
+        </div>
+
+        <div class="form-box">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3 style="margin:0; border:none; padding:0;">All-Time Legend Rankings</h3>
+            </div>
+            <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th onclick="sortTable('rank')">Rank &#x25B5;&#x25BF;</th>
+                        <th onclick="sortTable('name')">Legend Name &#x25B5;&#x25BF;</th>
+                        <th onclick="sortTable('nationality')">Nationality &#x25B5;&#x25BF;</th>
+                        <th onclick="sortTable('activeYears')">Active Years &#x25B5;&#x25BF;</th>
+                        <th class="text-center" onclick="sortTable('ballonDorWins')">Ballon d'Or Wins &#x25B5;&#x25BF;</th>
+                        <th class="text-right" onclick="sortTable('careerGames')">Career Games &#x25B5;&#x25BF;</th>
+                        <th class="text-right" onclick="sortTable('careerGoals')">Career Goals &#x25B5;&#x25BF;</th>
+                    </tr>
+                </thead>
+                <tbody id="legendsTableBody">
+                    <tr>
+                        <td colspan="7" class="text-center" style="padding: 30px; color: #bdc3c7;">Loading data from ballondor.json...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+        <div class="form-box" style="text-align: center;">
+            <h3>Vote for Your Favorite Legend</h3>
+            <p class="intro-text" style="color: #ffffff !important; max-width: 600px; margin-left: auto; margin-right: auto; margin-top: 0; margin-bottom: 15px;"></p>
+                Cast your official ballot on the official platform.
+            </p>
+            <a href="https://ballondor.com" target="_blank" rel="noopener noreferrer" class="btn-vote">
+                Cast Your Official Vote at BallonDor.com &rarr;
+            </a>
+        </div>
+    </div>
+
+    <div id="playerModal" class="modal-overlay" onclick="handleModalBackgroundClick(event)">
+        <div class="modal-box" id="modalBox">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <div id="modalContent">
+                <!-- Details injected dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        Created by Naushad Khan for COP 4813, 2026
+    </footer>
+
+    <script>
+        var closetimer = 0;
+        var ddmenuitem = 0;
+
+        function mopen(id) {
+            mcancelclosetime();
+
+            if (ddmenuitem) {
+            ddmenuitem.style.visibility = 'hidden';
+            }
+
+            ddmenuitem = document.getElementById(id);
+            ddmenuitem.style.visibility = 'visible';
+    }
+
+    function mclose() {
+        if (ddmenuitem) {
+            ddmenuitem.style.visibility = 'hidden';
+        }
+    }
+
+    function mclosetime() {
+        closetimer = window.setTimeout(mclose, 1000);
+    }
+
+    function mcancelclosetime() {
+        if (closetimer) {
+            window.clearTimeout(closetimer);
+            closetimer = null;
+        }
+    }
+
+    document.onclick = mclose;
+
+    let legendsData = [];
+    let currentSortColumn = 'ballonDorWins';
+    let isAscending = false;
+
+    window.onload = function() {
+        fetch('ballondor.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to load ballondor.json (Ensure Live Server is running)');
+                }
+                return response.json();
+            })
+            .then(data => {
+                legendsData = data;
+                sortAndRenderData();
+            })
+            .catch(error => {
+                console.error('Error fetching JSON:', error);
+                document.getElementById('legendsTableBody').innerHTML = `
+                    <tr>
+                        <td colspan="7" class="text-center" style="padding: 30px; color: #e74c3c;">
+                            Error loading <strong>ballondor.json</strong>. Please make sure you are running via Live Server or Python HTTP server!
+                        </td>
+                    </tr>`;
+            });
+    };
+
+    function sortTable(column) {
+        if (currentSortColumn === column) {
+            isAscending = !isAscending;
+        } else {
+            currentSortColumn = column;
+            isAscending = (column === 'name' || column === 'nationality');
+        }
+        sortAndRenderData();
+    }
+
+    function sortAndRenderData() {
+        let dataCopy = [...legendsData];
+
+        dataCopy.sort((a, b) => {
+            let valA, valB;
+            if (currentSortColumn === 'rank') {
+                valA = a.id;
+                valB = b.id;
+            } else if (currentSortColumn === 'name') {
+                valA = a.name;
+                valB = b.name;
+                return isAscending ? valA.localeCompare(valB) : valB.localeCompare(valA);
+            } else if (currentSortColumn === 'nationality') {
+                valA = a.nationalities.join(', ');
+                valB = b.nationalities.join(', ');
+                return isAscending ? valA.localeCompare(valB) : valB.localeCompare(valA);
+            } else if (currentSortColumn === 'activeYears') {
+                valA = a.activeYears.start;
+                valB = b.activeYears.start;
+            } else if (currentSortColumn === 'ballonDorWins') {
+                valA = a.ballonDorWins;
+                valB = b.ballonDorWins;
+            } else if (currentSortColumn === 'careerGames') {
+                valA = a.careerGames;
+                valB = b.careerGames;
+            } else if (currentSortColumn === 'careerGoals') {
+                valA = a.careerGoals;
+                valB = b.careerGoals;
+            }
+
+            if (valA < valB) return isAscending ? -1 : 1;
+            if (valA > valB) return isAscending ? 1 : -1;
+            return 0;
+        });
+
+        renderTable(dataCopy);
+    }
+
+    function renderTable(data) {
+        const tbody = document.getElementById('legendsTableBody');
+        let html = '';
+
+        data.forEach((player, index) => {
+            let activeStr = '';
+            if (player.activeYears.end) {
+                activeStr = `${player.activeYears.start} – ${player.activeYears.end} (${player.activeYears.seasons} seasons)`;
+            } else {
+                activeStr = `${player.activeYears.start} – Present`;
+            }
+
+            html += `
+                <tr onclick="showPlayerDetails(${player.id})" title="Click to view details">
+                    <td style="font-weight: bold; color: #3498db;">#${index + 1}</td>
+                    <td style="font-weight: 600;">${player.name}</td>
+                    <td>${player.nationalities.join(', ')}</td>
+                    <td style="font-size: 13px; color: #bdc3c7;">${activeStr}</td>
+                    <td class="text-center">
+                        <span>${player.ballonDorWins} (${player.ballonDorYears.join(', ')})</span>
+                    </td>
+                    <td class="text-right" style="font-family: monospace;">${player.careerGames.toLocaleString()}</td>
+                    <td class="text-right" style="font-family: monospace; font-weight: bold; color: #3498db;">${player.careerGoals.toLocaleString()}</td>
+                </tr>
+            `;
+        });
+        tbody.innerHTML = html;
+    }
+
+    function showPlayerDetails(id) {
+        const player = legendsData.find(p => p.id === id);
+        if (!player) return;
+
+        let activeStr = player.activeYears.end ? `${player.activeYears.start} – ${player.activeYears.end}` : `${player.activeYears.start} – Present`;
+        let trophiesHtml = player.majorTrophies ? player.majorTrophies.map(t => `<li>${t}</li>`).join('') : '<li>N/A</li>';
+
+        document.getElementById('modalContent').innerHTML = `
+            <h3 style="margin-top:0; color:#3498db; border-bottom:2px solid #34495e; padding-bottom:8px;">${player.name}</h3>
+            <p><strong>Nationalities:</strong> ${player.nationalities.join(', ')}</p>
+            <p><strong>Active Years:</strong> ${activeStr}</p>
+            <p><strong>Ballon d'Or Wins:</strong> ${player.ballonDorWins} (${player.ballonDorYears.join(', ')})</p>
+            <p><strong>Career Games:</strong> ${player.careerGames.toLocaleString()} | <strong>Career Goals:</strong> ${player.careerGoals.toLocaleString()}</p>
+            <p><strong>Major Trophies:</strong></p>
+            <ul style="margin: 0; padding-left: 20px; color: #ecf0f1;">
+                ${trophiesHtml}
+            </ul>
+        `;
+        document.getElementById('playerModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('playerModal').style.display = 'none';
+    }
+
+    function handleModalBackgroundClick(event) {
+        if (event.target === document.getElementById('playerModal')) {
+            closeModal();
+        }
+    }
+  
+    </script>
+</body>
+</html>
