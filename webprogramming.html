@@ -12,6 +12,48 @@
 
 <h2>Info About Course</h2>
 
+<ul id="sddm">
+
+    <li>
+        <a href="index.html"
+           onmouseover="mopen('m1')"
+           onmouseout="mclosetime()">Home</a>
+        <div id="m1"
+             onmouseover="mcancelclosetime()"
+             onmouseout="mclosetime()">
+        </div>
+    </li>
+
+    <li>
+        <a href="#"
+           onmouseover="mopen('m2')"
+           onmouseout="mclosetime()">Courses</a>
+        <div id="m2"
+             onmouseover="mcancelclosetime()"
+             onmouseout="mclosetime()">
+            <a href="webprogramming.html">Web Programming</a>
+        </div>
+    </li>
+
+    <li>
+        <a href="#"
+           onmouseover="mopen('m3')"
+           onmouseout="mclosetime()">Assignment</a>
+        <div id="m3"
+             onmouseover="mcancelclosetime()"
+             onmouseout="mclosetime()">
+            <a href="assignment1/index.html">Assignment 1</a>
+            <a href="index.html">Assignment 2</a>
+            <a href="form.html">Assignment 3 - Form</a>
+            <a href="plot.html">Assignment 4 - Plot</a>
+            <a href="spirograph.html">Assignment 5 - Spirograph</a>
+        </div>
+    </li>
+
+</ul>
+
+<br>
+
 <p>
     This course covers development of web systems with a focus on client-side development. Topics include use of XHTML, the Document Object Model (DOM), Cascading Style Sheets (CSS), use of JavaScript for providing client-side interactivity, ADA accessibility, JavaScript Object Notation (JSON), and design for mobile platforms. A web site design project is included.
 </p>
@@ -52,9 +94,44 @@
     </li>
 </ul>
 
-<p>
-    <a href="index.html">Back to Home</a>
-</p>
+<footer>
+    Created by Naushad Khan for COP 4813, 2026
+</footer>
+
+<script>
+    var closetimer = 0;
+    var ddmenuitem = 0;
+
+    function mopen(id) {
+        mcancelclosetime();
+
+        if (ddmenuitem) {
+            ddmenuitem.style.visibility = 'hidden';
+        }
+
+        ddmenuitem = document.getElementById(id);
+        ddmenuitem.style.visibility = 'visible';
+    }
+
+    function mclose() {
+        if (ddmenuitem) {
+            ddmenuitem.style.visibility = 'hidden';
+        }
+    }
+
+    function mclosetime() {
+        closetimer = window.setTimeout(mclose, 1000);
+    }
+
+    function mcancelclosetime() {
+        if (closetimer) {
+            window.clearTimeout(closetimer);
+            closetimer = null;
+        }
+    }
+
+    document.onclick = mclose;
+</script>
 
 </body>
 </html>
