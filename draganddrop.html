@@ -1,0 +1,336 @@
+<!DOCTYPE html> 
+<html> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Basketball Drag and Drop Game for Naushad Khan's Web Development Portfolio">
+    <title>Drag-Drop Basketball - Naushad Khan's Web Development Portfolio</title>
+    
+    <script src="https://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+    <style>
+        body {
+            background-color: #e0f2fe; 
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-top: 20px;
+        }
+
+        /* Portfolio Menu Styling */
+        #sddm {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            background: #2c3e50;
+            text-align: center;
+        }
+
+        #sddm li {
+            position: relative;
+            display: inline-block;
+        }
+
+        #sddm li a {
+            display: block;
+            padding: 10px 20px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        #sddm li a:hover {
+            background: #3498db;
+        }
+
+        #sddm div {
+            position: absolute;
+            visibility: hidden;
+            background: #2c3e50;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            z-index: 100;
+        }
+
+        #sddm div a {
+            white-space: nowrap;
+            padding: 10px 15px;
+            text-align: left;
+        }
+
+        #sddm div a:hover {
+            background: #2980b9;
+        }
+
+        /* Game Layout Containers */
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            margin: 30px auto;
+            max-width: 900px; 
+            padding: 0 20px;
+        }
+
+        .box {
+            background-color: #2c3e50; 
+            color: #ffffff;            
+            border: 3px solid #1a252f; 
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        /* Scoreboard */
+        .scoreboard-box {
+            display: flex;
+            justify-content: space-around;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .scoreboard-box span {
+            color: #f1c40f;
+        }
+
+        /* Instructions & Ball Box */
+        .play-area-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 140px;
+            justify-content: center;
+        }
+
+        #basketball {
+            width: 80px;
+            height: 80px;
+            cursor: grab;
+            margin-top: 15px;
+        }
+
+        #basketball:active {
+            cursor: grabbing;
+        }
+
+        /* Hoops Box Background */
+        .hoops-box {
+            background-color: #d35400;
+            border: 3px solid #a04000;
+        }
+
+        .hoops-wrapper {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            gap: 20px;
+        }
+
+        .city-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .city-name {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #ffffff;
+            text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+        }
+
+        .drop {
+            width: 100%;
+            max-width: 300px;
+            height: 200px;
+            background-image: url('hoop.svg');
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            border: 3px dashed #ffffff;
+            border-radius: 6px;
+            background-color: #f39c12; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 16px;
+            text-shadow: 2px 2px 4px #000000, -1px -1px 2px #000000;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Drag-Drop Basketball</h1>
+
+
+<ul id="sddm">
+    <li>
+        <a href="index.html"
+           onmouseover="mopen('m1')"
+           onmouseout="mclosetime()">Home</a>
+        <div id="m1"
+             onmouseover="mcancelclosetime()"
+             onmouseout="mclosetime()">
+        </div>
+    </li>
+
+    <li>
+        <a href="#"
+           onmouseover="mopen('m2')"
+           onmouseout="mclosetime()">Courses</a>
+        <div id="m2"
+             onmouseover="mcancelclosetime()"
+             onmouseout="mclosetime()">
+            <a href="webprogramming.html">Web Programming</a>
+        </div>
+    </li>
+
+    <li>
+        <a href="#"
+           onmouseover="mopen('m3')"
+           onmouseout="mclosetime()">Assignment</a>
+        <div id="m3"
+             onmouseover="mcancelclosetime()"
+             onmouseout="mclosetime()">
+            <a href="assignment1/index.html">Assignment 1</a>
+            <a href="index.html">Assignment 2</a>
+            <a href="form.html">Assignment 3 - Form</a>
+            <a href="plot.html">Assignment 4 - Plot</a>
+            <a href="spirograph.html">Assignment 5 - Spirograph</a>
+            <a href="json.html">Assignment 6 - JSON</a>
+            <a href="draganddrop.html">Assignment 7 - Drag & Drop</a>
+        </div>
+    </li>
+</ul>
+
+<br>
+
+
+<div class="game-container">
+    
+
+    <div class="box scoreboard-box">
+        <div>Miami Heat Score: <span id="score-miami">0</span></div>
+        <div>Orlando Magic Score: <span id="score-orlando">0</span></div>
+    </div>
+
+
+    <div class="box play-area-box">
+        <p style="margin: 0; font-size: 16px; font-weight: bold;">Drag the basketball to score for your favorite team's hoop</p>
+        <img src="ball.svg" id="basketball" alt="Basketball" />
+    </div>
+
+    <div class="box hoops-box">
+        <div class="hoops-wrapper">
+
+            <div class="city-container">
+                <div class="city-name">Miami Heat</div>
+                <div id="drop-miami" class="drop" data-city="Miami Heat">Drop Here to Score</div>
+            </div>
+
+
+            <div class="city-container">
+                <div class="city-name">Orlando Magic</div>
+                <div id="drop-orlando" class="drop" data-city="Orlando Magic">Drop Here to Score</div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    Made by Naushad Khan for COP 4813, 2026
+</footer>
+
+<script>
+    // Menu Dropdown Script
+    var closetimer = 0;
+    var ddmenuitem = 0;
+
+    function mopen(id) {
+        mcancelclosetime();
+
+        if (ddmenuitem) {
+            ddmenuitem.style.visibility = 'hidden';
+        }
+
+        ddmenuitem = document.getElementById(id);
+        ddmenuitem.style.visibility = 'visible';
+    }
+
+    function mclose() {
+        if (ddmenuitem) {
+            ddmenuitem.style.visibility = 'hidden';
+        }
+    }
+
+    function mclosetime() {
+        closetimer = window.setTimeout(mclose, 1000);
+    }
+
+    function mcancelclosetime() {
+        if (closetimer) {
+            window.clearTimeout(closetimer);
+            closetimer = null;
+        }
+    }
+
+    document.onclick = mclose;
+
+
+
+    $(init);
+
+    function init() {
+      $('#basketball').draggable({
+          containment: "document",
+          cursor: "move",
+          revert: "invalid" // bounces back if not dropped on a hoop
+      });
+
+      $('.drop').droppable({
+        drop: handleDropEvent
+      });   
+    }
+
+    function handleDropEvent(event, ui) {
+      var cityName = $(this).data('city');
+      var draggable = ui.draggable;
+      
+
+      if (cityName === "Miami Heat") {
+          var currentScore = parseInt($('#score-miami').text());
+          $('#score-miami').text(currentScore + 2);
+          $(this).html("Wrong team!! (+2)");
+      } else if (cityName === "Orlando Magic") {
+          var currentScore = parseInt($('#score-orlando').text());
+          $('#score-orlando').text(currentScore + 2);
+          $(this).html("Scored +2 for " + cityName + "!");
+      }
+      
+      // Reset ball position back to starting container
+      draggable.animate({ top: 0, left: 0 }, 'fast');
+    }
+</script>
+
+</body>
+</html>
