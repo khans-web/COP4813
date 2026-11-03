@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Lighthouse analysis results for the mobile home page for Naushad Khan's Web Development Portfolio">
+  <title>Mobile Analysis Results - Naushad Khan's Web Development Portfolio</title>
+
+  <style>
+
+    body {
+        background-color: #e0f2fe;
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        padding: 0;
+        text-align: center;
+    }
+
+    h1 {
+        color: #2c3e50;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    #sddm {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        background: #2c3e50;
+        text-align: center;
+    }
+
+    #sddm li {
+        position: relative;
+        display: inline-block;
+    }
+
+    #sddm li a {
+        display: block;
+        padding: 10px 20px;
+        color: #fff;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    #sddm li a:hover {
+        background: #3498db;
+    }
+
+    #sddm div {
+        position: absolute;
+        visibility: hidden;
+        background: #2c3e50;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        z-index: 100;
+    }
+
+    #sddm div a {
+        display: block;
+        white-space: nowrap;
+        padding: 10px 15px;
+        text-align: left;
+        color: #fff;
+        text-decoration: none;
+    }
+
+    #sddm div a:hover {
+        background: #2980b9;
+    }
+
+    /* Reporting screenshots */
+    body img {
+        display: block;
+        max-width: 700px;
+        width: 100%;
+        height: auto;
+        margin: 15px auto 30px auto;
+        border-radius: 8px;
+        border: 5px solid #1a252f;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    footer {
+        margin-top: 40px;
+        padding: 20px;
+        color: #2c3e50;
+    }
+  </style>
+</head>
+
+<body>
+
+<main>
+
+<h1>Mobile Analysis Results</h1>
+
+<ul id="sddm">
+
+    <li>
+        <a href="index.html">Home</a>
+    </li>
+
+    <li>
+        <a href="#"
+           onmouseover="mopen('m2')"
+           onmouseout="mclosetime()">Courses</a>
+        <div id="m2"
+             onmouseover="mcancelclosetime()"
+             onmouseout="mclosetime()">
+            <a href="webprogramming.html">Web Programming</a>
+        </div>
+    </li>
+
+    <li>
+        <a href="#"
+           onmouseover="mopen('m3')"
+           onmouseout="mclosetime()">Assignment</a>
+        <div id="m3"
+             onmouseover="mcancelclosetime()"
+             onmouseout="mclosetime()">
+            <a href="assignment1/index.html">Assignment 1</a>
+            <a href="index.html">Assignment 2</a>
+            <a href="form.html">Assignment 3 - Form</a>
+            <a href="plot.html">Assignment 4 - Plot</a>
+            <a href="spirograph.html">Assignment 5 - Spirograph</a>
+            <a href="json.html">Assignment 6 - JSON</a>
+            <a href="draganddrop.html">Assignment 7 - Drag & Drop</a>
+            <a href="animation.html">Assignment 9 - Snake Animation Game</a>
+            <a href="mobile_index.html">Assignment 10 - Mobile Home</a>
+            <a href="mobile_analysis.html">Assignment 10 - Mobile Analysis Result</a>
+        </div>
+    </li>
+
+</ul>
+
+<img src="overall.jpeg">
+
+<img src="performance.jpeg">
+
+<img src="accessibility.jpeg">
+
+<img src="best_practices.jpeg" >
+
+<img src="seo.jpeg">
+
+<img src="agentic.jpeg">
+
+</main>
+
+<footer>
+    Created by Naushad Khan for COP 4813, 2026
+</footer>
+
+<script>
+    var closetimer = 0;
+    var ddmenuitem = 0;
+
+    function mopen(id) {
+        mcancelclosetime();
+
+        if (ddmenuitem) {
+            ddmenuitem.style.visibility = 'hidden';
+        }
+
+        ddmenuitem = document.getElementById(id);
+        ddmenuitem.style.visibility = 'visible';
+    }
+
+    function mclose() {
+        if (ddmenuitem) {
+            ddmenuitem.style.visibility = 'hidden';
+        }
+    }
+
+    function mclosetime() {
+        closetimer = window.setTimeout(mclose, 1000);
+    }
+
+    function mcancelclosetime() {
+        if (closetimer) {
+            window.clearTimeout(closetimer);
+            closetimer = null;
+        }
+    }
+
+    document.onclick = mclose;
+</script>
+
+</body>
+</html>
