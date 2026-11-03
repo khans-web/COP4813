@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Mobile version of the home page for Naushad Khan's Web Development Portfolio">
+  <title>Mobile Home Page - for Naushad Khan's Web Development Portfolio</title>
+
+  <style>
+    body {
+        background-color: #e0f2fe;
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        padding: 0;
+        text-align: center;
+    }
+
+    h1 {
+        color: #2c3e50;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    #sddm {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        background: #2c3e50;
+        text-align: center;
+    }
+
+    #sddm li {
+        position: relative;
+        display: inline-block;
+    }
+
+    /* Larger tap targets: fingers need bigger areas than mouse pointers */
+    #sddm li a {
+        display: block;
+        padding: 14px 18px;
+        color: #fff;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    /* Highlights the open menu item as well as hovered ones */
+    #sddm li a:hover,
+    #sddm li a.open {
+        background: #3498db;
+    }
+
+    #sddm div {
+        position: absolute;
+        visibility: hidden;
+        background: #2c3e50;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        z-index: 100;
+        min-width: 200px;
+    }
+
+    #sddm div a {
+        display: block;
+        white-space: nowrap;
+        padding: 14px 16px;
+        text-align: left;
+        color: #fff;
+        text-decoration: none;
+        font-size: 16px;
+    }
+
+    #sddm div a:hover {
+        background: #2980b9;
+    }
+
+    /* Main image - max-width keeps it inside small screens */
+    body img {
+        display: block;
+        width: 400px;
+        max-width: 100%;
+        height: auto;
+        margin: 30px auto;
+        border-radius: 8px;
+    }
+
+    /* Welcome message */
+    body p {
+        max-width: 700px;
+        margin: 30px auto;
+        font-size: 18px;
+        line-height: 1.6;
+        color: #333333;
+    }
+
+    /* Footer */
+    footer {
+        margin-top: 40px;
+        padding: 20px;
+        color: #2c3e50;
+    }
+
+    /* --- Small screen adjustments --- */
+    @media (max-width: 600px) {
+
+        body {
+            margin: 10px;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        /* Menu items wrap into rows instead of overflowing */
+        #sddm li a {
+            padding: 12px 12px;
+            font-size: 14px;
+        }
+
+        #sddm div a {
+            font-size: 14px;
+        }
+
+        body p {
+            font-size: 16px;
+            margin: 20px auto;
+        }
+    }
+  </style>
+<body>
+
+<h1>Mobile Home Page</h1>
+
+<ul id="sddm">
+
+    <li>
+        <a href="index.html">Home</a>
+    </li>
+
+    <li>
+        <a href="#"
+           onclick="mtoggle('m2', event)">Courses</a>
+        <div id="m2">
+            <a href="webprogramming.html">Web Programming</a>
+        </div>
+    </li>
+
+    <li>
+        <a href="#"
+           onclick="mtoggle('m3', event)">Assignment</a>
+        <div id="m3">
+            <a href="assignment1/index.html">Assignment 1</a>
+            <a href="index.html">Assignment 2</a>
+            <a href="form.html">Assignment 3 - Form</a>
+            <a href="plot.html">Assignment 4 - Plot</a>
+            <a href="spirograph.html">Assignment 5 - Spirograph</a>
+            <a href="json.html">Assignment 6 - JSON</a>
+            <a href="draganddrop.html">Assignment 7 - Drag & Drop</a>
+            <a href="animation.html">Assignment 9 - Snake Animation Game</a>
+            <a href="mobile_index.html">Assignment 10 - Mobile Home</a>
+        </div>
+    </li>
+
+</ul>
+
+<br>
+
+<img src="web-development.jpeg"
+     alt="HTML, CSS, and JavaScript">
+
+<p>
+    Welcome to my page. This website showcases my work and projects
+    for my COP 4813 course using HTML, CSS, and JavaScript. Stay tuned
+    as I continue to develop my web development skills and expand this
+    page throughout the course.
+</p>
+
+<footer>
+    Created by Naushad Khan for COP 4813, 2026
+</footer>
+
+<script>
+    var ddmenuitem = 0;
+
+    // Open a dropdown when its menu title is tapped
+    function mopen(id) {
+        if (ddmenuitem) {
+            ddmenuitem.style.visibility = 'hidden';
+            ddmenuitem.previousElementSibling.classList.remove('open');
+        }
+
+        ddmenuitem = document.getElementById(id);
+        ddmenuitem.style.visibility = 'visible';
+        ddmenuitem.previousElementSibling.classList.add('open');
+    }
+
+    // Close whichever dropdown is open
+    function mclose() {
+        if (ddmenuitem) {
+            ddmenuitem.style.visibility = 'hidden';
+            ddmenuitem.previousElementSibling.classList.remove('open');
+            ddmenuitem = 0;
+        }
+    }
+
+    // Tap the menu title: open the dropdown if it is closed,
+    // close it if it is already open. Tapping elsewhere closes it.
+    function mtoggle(id, evt) {
+        if (ddmenuitem === document.getElementById(id)) {
+            mclose();
+        } else {
+            mopen(id);
+        }
+        evt.stopPropagation();
+    }
+
+    // A tap anywhere else on the page closes the menu
+    document.onclick = mclose;
+</script>
+
+</body>
+</html>
