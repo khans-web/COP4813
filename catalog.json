@@ -1,0 +1,158 @@
+{
+  "program": {
+    "name": "Master's, Cybersecurity Track",
+    "goalHours": 30,
+    "semesters": ["Spring 2027", "Fall 2027", "Spring 2028", "Fall 2028", "Spring 2029"],
+    "groups": {
+      "prereq":     { "label": "Track prerequisite", "quota": 0 },
+      "required":   { "label": "Required core", "quota": 0 },
+      "networking": { "label": "Networking (choose 1)", "quota": 1 },
+      "analytics":  { "label": "Data Analytics (choose 1)", "quota": 1 },
+      "cyber":      { "label": "Cybersecurity/Privacy (choose 1)", "quota": 1 },
+      "electives":  { "label": "Other Elective (choose 2)", "quota": 2 },
+      "thesis":     { "label": "Thesis (2 enrollments)", "quota": 2 },
+      "nonthesis":  { "label": "Non-thesis option (choose 2)", "quota": 2 }
+    }
+  },
+  "courses": [
+    {
+      "code": "COP3502C", "name": "Computer Science I",
+      "group": "prereq", "hours": 3, "offered": "Spring, Fall",
+      "prereqs": [],
+      "details": "Track prerequisite - complete before graduate coursework"
+    },
+    {
+      "code": "CIS3360", "name": "Security in Computing",
+      "group": "prereq", "hours": 3, "offered": "Spring, Fall",
+      "prereqs": [],
+      "details": "Track prerequisite - complete before graduate coursework"
+    },
+    {
+      "code": "CNT3004", "name": "Computer Network Concepts",
+      "group": "prereq", "hours": 3, "offered": "Spring, Fall",
+      "prereqs": [],
+      "details": "Track prerequisite - complete before graduate coursework"
+    },
+    {
+      "code": "COP4710", "name": "Database Systems",
+      "group": "prereq", "hours": 3, "offered": "Spring, Fall",
+      "prereqs": [],
+      "details": "Undergraduate prerequisite for COP5711. Confirm the official course title."
+    },
+    {
+      "code": "CIS4615", "name": "Software Testing",
+      "group": "prereq", "hours": 3, "offered": "Spring, Fall",
+      "prereqs": [],
+      "details": "Undergraduate prerequisite for CIS6614. Confirm the official course title."
+    },
+
+    {
+      "code": "CAP5150", "name": "Foundations of Computer Security and Privacy",
+      "group": "required", "hours": 3, "offered": "Fall",
+      "prereqs": [],
+      "details": "Required core"
+    },
+    {
+      "code": "CDA5220", "name": "Foundations of Secure Execution Environment",
+      "group": "required", "hours": 3, "offered": "Spring",
+      "prereqs": ["CDA5106"],
+      "details": "Requires Advanced Computer Architecture (CDA5106)"
+    },
+    {
+      "code": "CIS6614", "name": "Advanced Software Systems Security",
+      "group": "required", "hours": 3, "offered": "Fall",
+      "prereqs": ["CIS4615"],
+      "details": "Requires the undergraduate software testing course"
+    },
+
+    {
+      "code": "CNT5008", "name": "Computer Communication Networks Architecture",
+      "group": "networking", "hours": 3, "offered": "Fall",
+      "prereqs": [],
+      "details": "Prerequisite for CNT6707"
+    },
+    {
+      "code": "CNT5805", "name": "Network Science",
+      "group": "networking", "hours": 3, "offered": "Fall",
+      "prereqs": [],
+      "details": "Alternative networking option"
+    },
+
+    {
+      "code": "COP5711", "name": "Parallel and Distributed Database Systems",
+      "group": "analytics", "hours": 3, "offered": "Spring",
+      "prereqs": ["COP4710"],
+      "details": "Requires undergraduate databases"
+    },
+    {
+      "code": "CAP5610", "name": "Machine Learning",
+      "group": "analytics", "hours": 3, "offered": "Spring",
+      "prereqs": [],
+      "details": "Prerequisite for CAP5636"
+    },
+
+    {
+      "code": "CNT5410L", "name": "Cyber Operations Lab",
+      "group": "cyber", "hours": 3, "offered": "Spring",
+      "prereqs": [],
+      "details": "Cybersecurity/Privacy option"
+    },
+    {
+      "code": "CAP6135", "name": "Malware and Software Vulnerability Analysis",
+      "group": "cyber", "hours": 3, "offered": "Spring",
+      "prereqs": ["CDA5106"],
+      "details": "Requires Advanced Computer Architecture (CDA5106)"
+    },
+
+    {
+      "code": "CDA5106", "name": "Advanced Computer Architecture",
+      "group": "electives", "hours": 3, "offered": "Spring, Fall",
+      "prereqs": [],
+      "details": "Gate course - also the prerequisite for CDA5220, CAP6135 and CIS6395"
+    },
+    {
+      "code": "COT5405", "name": "Design and Analysis of Algorithms",
+      "group": "electives", "hours": 3, "offered": "Spring, Fall",
+      "prereqs": [],
+      "details": "Prerequisite for COT6410"
+    },
+    {
+      "code": "COT6410", "name": "Computational Complexity",
+      "group": "electives", "hours": 3, "offered": "Fall",
+      "prereqs": ["COT5405"],
+      "details": "Requires Algorithms"
+    },
+
+    {
+      "code": "XXX6971A", "name": "Thesis Semester 1",
+      "group": "thesis", "hours": 3, "offered": "Spring, Fall",
+      "prereqs": [],
+      "details": "Thesis option - first enrollment"
+    },
+    {
+      "code": "XXX6971B", "name": "Thesis Semester 2",
+      "group": "thesis", "hours": 3, "offered": "Spring, Fall",
+      "prereqs": ["XXX6971A"],
+      "details": "Thesis option - second enrollment, after Semester 1"
+    },
+
+    {
+      "code": "CIS6395", "name": "Incident Response Technologies",
+      "group": "nonthesis", "hours": 3, "offered": "Fall",
+      "prereqs": ["CDA5106"],
+      "details": "Requires Advanced Computer Architecture (CDA5106)"
+    },
+    {
+      "code": "CNT6707", "name": "Advanced Computer Networks",
+      "group": "nonthesis", "hours": 3, "offered": "Spring",
+      "prereqs": ["CNT5008"],
+      "details": "Requires CNT5008"
+    },
+    {
+      "code": "CAP5636", "name": "Advanced Artificial Intelligence",
+      "group": "nonthesis", "hours": 3, "offered": "Fall",
+      "prereqs": ["CAP5610"],
+      "details": "Requires Machine Learning (CAP5610)"
+    }
+  ]
+}

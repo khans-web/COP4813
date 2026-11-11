@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Class planner using dynamic objects for Naushad Khan's Web Development Portfolio">
+  <title>Class planner - Naushad Khan's Web Development Portfolio</title>
+
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      text-align: center;
+      background-color: #d6e4f0;
+    }
+
+    h1 {
+      color: #2c3e50;
+    }
+
+    .intro {
+      max-width: 700px;
+      margin: 20px auto;
+      font-size: 16px;
+      line-height: 1.6;
+      color: #334155;
+    }
+
+    #sddm {
+      position: relative;
+      margin: 0 -40px 20px;  
+      padding: 0;
+      list-style: none;
+      z-index: 1000;
+      display: block;
+      background: #2c3e50;
+      text-align: center;
+    }
+
+    #sddm li {
+      display: inline-block;
+      list-style: none;
+      position: relative;   
+    }
+
+    #sddm li a {
+      display: block;
+      padding: 12px 25px;
+      color: white;
+      background: transparent;
+      text-decoration: none;
+    }
+
+    #sddm li a:hover {
+      background: #34495e;
+    }
+
+   
+    #sddm li a.active {
+      background: #2e86de;
+    }
+
+    #sddm li div {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      visibility: hidden;
+      margin: 0;
+      padding: 0;
+      background: #34495e;
+      border: none;
+      min-width: 280px;
+      z-index: 1001;
+      text-align: left;
+    }
+
+    #sddm li div a {
+      display: block;
+      padding: 10px 18px;
+      color: white;
+      font-weight: bold;
+      background: transparent;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+
+    #sddm li div a:hover {
+      background: #2e86de;
+      color: white;
+    }
+
+    .legend div {
+      display: inline-block;
+      border-radius: 15px;
+      border: solid;
+      padding: 10px;
+      margin: 5px;
+      max-width: 340px;
+      text-align: left;
+    }
+
+    .greenbox  { background: lightgreen; border-color: green; }
+    .yellowbox { background: lightyellow; border-color: #caa308; }
+
+    .planner-table {
+      margin: 0 auto;
+      border-spacing: 10px;
+    }
+
+    .completed {
+      border-radius: 15px;
+      border: solid #2563EB;
+      background: white;
+      padding: 10px;
+      width: 310px;
+      min-height: 1100px;
+      text-align: left;
+    }
+
+    .semester {
+      border-radius: 15px;
+      border: solid #2563EB;
+      background: white;
+      padding: 10px;
+      width: 300px;
+      min-height: 150px;
+      text-align: left;
+    }
+
+    .hours {
+      border-radius: 10px;
+      border: 1px solid #60a5fa;
+      background: white;
+      padding: 10px;
+      width: 270px;
+      min-height: 20px;
+      text-align: left;
+      font-weight: bold;
+      color: #1E3A8A;
+    }
+
+    .auditbox {
+      border-radius: 10px;
+      border: 1px solid #60a5fa;
+      background: white;
+      padding: 10px;
+      width: 270px;
+      min-height: 40px;
+      text-align: left;
+      font-size: 13px;
+      line-height: 1.5;
+      color: #334155;
+    }
+
+    .completedclasses {
+      border-radius: 10px;
+      border: 1px solid #60a5fa;
+      background: white;
+      padding: 10px;
+      width: 270px;
+      min-height: 250px;
+      text-align: left;
+    }
+
+    .semesterclasses {
+      border-radius: 10px;
+      border: 1px solid #60a5fa;
+      background: white;
+      padding: 10px;
+      width: 270px;
+      min-height: 80px;
+      text-align: left;
+    }
+
+    .classAvailable, .classNotAvailable {
+      border-radius: 15px;
+      border: solid;
+      padding: 12px;
+      width: 300px;
+      text-align: left;
+      position: relative;
+      box-sizing: border-box;
+    }
+
+    .classAvailable {
+      background: lightgreen;
+      border-color: green;
+      cursor: grab;
+    }
+
+    .classAvailable:hover {
+      border: double green;
+    }
+
+    .classNotAvailable {
+      background: lightyellow;
+      border-color: #caa308;
+      cursor: not-allowed;
+    }
+
+    .classAvailable small,
+    .classNotAvailable small {
+      color: #334155;
+    }
+
+    .classAvailable .tooltiptext,
+    .classNotAvailable .tooltiptext {
+      visibility: hidden;
+      width: 200px;
+      background-color: #555;
+      color: #fff;
+      text-align: center;
+      padding: 5px;
+      border-radius: 6px;
+      position: absolute;
+      z-index: 1002;
+      bottom: 125%;
+      left: 50%;
+      margin-left: -100px;
+      opacity: 0;
+      transition: opacity 1s;
+    }
+
+    .classAvailable:hover .tooltiptext,
+    .classNotAvailable:hover .tooltiptext {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .planner-btn {
+      background-color: #2e86de;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+      margin: 5px;
+    }
+
+    .planner-btn:hover {
+      background-color: #1B4F72;
+    }
+
+    /* ---------- "What Can I Take?" dialog ---------- */
+    #dialog {
+      display: none;   /* shown by jQuery UI's .dialog() */
+    }
+
+    .whatcanitake {
+      border-radius: 15px;
+      border: solid #2563EB;
+      background: white;
+      padding: 20px;
+      height: 400px;
+      width: 600px;
+      text-align: left;
+      position: relative;
+      font-size: 14px;
+      overflow: auto;
+    }
+
+    .ui-dialog-titlebar,
+    .ui-dialog-buttonset {
+      background-color: #bfdbfe;
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+</head>
+<body>
+<main>
+
+
+  <h1>Quick Class Planner</h1>
+  
+  <ul id="sddm">
+
+    <li>
+        <a href="index.html">Home</a>
+    </li>
+
+    <li>
+        <a href="#"
+           onmouseover="mopen('m2')"
+           onmouseout="mclosetime()">Courses</a>
+        <div id="m2"
+             onmouseover="mcancelclosetime()"
+             onmouseout="mclosetime()">
+            <a href="webprogramming.html">Web Programming</a>
+        </div>
+    </li>
+
+    <li>
+        <a href="#"
+           onmouseover="mopen('m3')"
+           onmouseout="mclosetime()">Assignment</a>
+        <div id="m3"
+             onmouseover="mcancelclosetime()"
+             onmouseout="mclosetime()">
+            <a href="assignment1/index.html">Assignment 1</a>
+            <a href="index.html">Assignment 2</a>
+            <a href="form.html">Assignment 3 - Form</a>
+            <a href="plot.html">Assignment 4 - Plot</a>
+            <a href="spirograph.html">Assignment 5 - Spirograph</a>
+            <a href="json.html">Assignment 6 - JSON</a>
+            <a href="draganddrop.html">Assignment 7 - Drag & Drop</a>
+            <a href="animation.html">Assignment 9 - Snake Animation Game</a>
+            <a href="mobile_index.html">Assignment 10 - Mobile Home</a>
+            <a href="mobile_analysis.html">Assignment 10 - Mobile Analysis Result</a>
+            <a href="dynamic.html">Assignment 11 - Class Planner</a>
+        </div>
+    </li>
+  </ul>
+
+
+  <p class="intro" id="intro">
+    A drag-and-drop class planner using dynamically generated elements representing UCF's Masters in Cybersecurity track (30 credits).
+    Every course card, color and drop zone below is created dynamically in JavaScript.
+    Drag a course LEFT into Completed or RIGHT into a semester to plan it.
+    <br/>
+    Official course descriptions are on the
+    <a href="https://www.ucf.edu/catalog/graduate/#/programs/Hk7CQJZdju/rJgk8POfs" target="_blank">UCF Cybersecuritycatalog website</a>.
+  </p>
+
+  <div class="legend">
+    <div class="greenbox">
+      Green courses are draggable, prerequisites are met
+    </div>
+    <div class="yellowbox">
+      Yellow courses mean prerequisites are not met.
+    </div>
+  </div>
+
+  <br><br>
+  <input type="button" value="What Can I Take?" id="allAvailable" class="planner-btn" />
+  <input type="button" value="Undo" id="undo" class="planner-btn" />
+
+  <table class="planner-table">
+    <tr>
+      <th>Drag Completed Courses Here</th>
+      <th>All Courses</th>
+      <th>Drag Semester Plan</th>
+    </tr>
+    <tr>
+      <td valign="top">
+        <div id="completed" class="completed">
+          <div class="hours">
+            <div id="CompletedHours">Hours Completed:</div>
+            <div id="ProgramHours">Program Hours (30 required):</div>
+          </div>
+          <br>
+          <div id="auditbox" class="auditbox"></div>
+          <br>
+          <div id="completedclasses" class="completedclasses">
+            <b>Completed Courses</b><br>
+          </div>
+          <br>
+        </div>
+      </td>
+      <td valign="top">
+        <div id="all"></div>
+      </td>
+      <td valign="top">
+        <div id="semester1" class="semester">
+          <div id="semester1hours" class="hours">Spring 2027</div>
+          <div id="semesterclasses1" class="semesterclasses"></div>
+          <br>
+        </div>
+        <br>
+        <div id="semester2" class="semester">
+          <div id="semester2hours" class="hours">Fall 2027</div>
+          <div id="semesterclasses2" class="semesterclasses"></div>
+          <br>
+        </div>
+        <br>
+        <div id="semester3" class="semester">
+          <div id="semester3hours" class="hours">Spring 2028</div>
+          <div id="semesterclasses3" class="semesterclasses"></div>
+          <br>
+        </div>
+        <br>
+        <div id="semester4" class="semester">
+          <div id="semester4hours" class="hours">Fall 2028</div>
+          <div id="semesterclasses4" class="semesterclasses"></div>
+          <br>
+        </div>
+        <br>
+        <div id="semester5" class="semester">
+          <div id="semester5hours" class="hours">Spring 2029</div>
+          <div id="semesterclasses5" class="semesterclasses"></div>
+          <br>
+        </div>
+      </td>
+    </tr>
+  </table>
+
+  <div id="dialog" class="whatcanitake"></div>
+
+</main>
+
+<footer>
+    Made by Naushad Khan for COP 4813, 2026
+</footer>
+
+<script>
+/*Prerequisites: an entry is a string (must be taken) or an array  */
+
+/* Menu: hover on desktop, tap/click toggle on touch*/
+(function() {
+  var canHover = window.matchMedia && window.matchMedia("(hover: hover)").matches;
+  var items = document.querySelectorAll("#sddm li");
+  for (var i = 0; i < items.length; i++) {
+    (function(li) {
+      var sub = li.querySelector("div");
+      if (!sub) return;
+      if (canHover) {
+        li.addEventListener("mouseenter", function() { sub.style.visibility = "visible"; });
+        li.addEventListener("mouseleave", function() { sub.style.visibility = "hidden"; });
+      } else {
+        li.querySelector("a").addEventListener("click", function(e) {
+          e.preventDefault();
+          var wasOpen = sub.style.visibility === "visible";
+          var all = document.querySelectorAll("#sddm li > div");
+          for (var k = 0; k < all.length; k++) all[k].style.visibility = "hidden";
+          sub.style.visibility = wasOpen ? "hidden" : "visible";
+        });
+      }
+    })(items[i]);
+  }
+})();
+
+/* ---------- Catalog data (filled in by loadCatalog) ---------- */
+var catalog = null;
+var courselist = [];
+var GOAL_HOURS = 30;
+var groupQuota = {};
+var groupLabels = {};
+var semesterNames = [""];
+var NUM_SEMESTERS = 5;
+
+var semesterHours = [0];
+var semesters = [[]];
+var undolist = [];
+var startDrag;
+var audit = null;
+var unlockMap = {};
+
+function loadCatalog() {
+  fetch("catalog.json")
+    .then(function(response) {
+      if (!response.ok) throw new Error("HTTP " + response.status);
+      return response.json();
+    })
+    .then(function(data) {
+      catalog = data;
+      initPlanner();
+    })
+    .catch(function() {
+      var el = document.getElementById("all");
+      if (el) {
+        el.innerHTML = "Error";
+      }
+    });
+}
+
+function initPlanner() {
+  var p = catalog.program;
+  GOAL_HOURS = p.goalHours;
+  NUM_SEMESTERS = p.semesters.length;
+  semesterNames = [""].concat(p.semesters);
+  semesterHours = [0];
+  semesters = [[]];
+  for (var s = 1; s <= NUM_SEMESTERS; s++) { semesterHours.push(0); semesters.push([]); }
+  groupQuota = {};
+  groupLabels = {};
+  Object.keys(p.groups).forEach(function(g) {
+    groupQuota[g] = p.groups[g].quota;
+    groupLabels[g] = p.groups[g].label;
+  });
+
+  courselist = catalog.courses.map(function(c) {
+    return {
+      Course: c.code, Name: c.name, PreReq: c.prereqs || [],
+      taken: false, semester: 0, hours: c.hours,
+      required: c.group === "required", group: c.group,
+      offered: c.offered, details: c.details
+    };
+  });
+
+  buildMaps();
+  buildSemesterHeaders();
+  createListAll();
+  setDropTargets();
+  updateEverything();
+
+  $("#undo").click(function() { executeUndo(); });
+
+  $("#allAvailable").click(function() {
+    $('#dialog').html(whatCanITake());
+    $('#dialog').dialog({
+      modal: true,
+      buttons: {
+        "Print": function() { printProgram(); },
+        "Close": function() { $(this).dialog("close"); }
+      }
+    });
+  });
+
+  addCatalogLink();
+}
+
+/* DYNAMIC link: built at runtime from the catalog, so the
+   course count and program name always match catalog.json */
+function addCatalogLink() {
+  $("#intro").append(
+    "<br/>This planner was built from a catalog of <b>" + courselist.length +
+    "</b> courses for the <b>" + catalog.program.name + "</b> - " +
+    "<a href='catalog.json' target='_blank'>view catalog.json</a>."
+  );
+}
+
+function buildSemesterHeaders() {
+  for (var s = 1; s <= NUM_SEMESTERS; s++) {
+    $("#semester" + s + "hours").html(semesterNames[s]);
+  }
+}
+
+/* unlockMap: "CDA5106" -> ["CDA5220", "CAP6135", "CIS6395"] */
+function buildMaps() {
+  unlockMap = {};
+  courselist.forEach(function(c) {
+    (c.PreReq || []).forEach(function(e) {
+      var opts = Array.isArray(e) ? e : [e];
+      opts.forEach(function(code) {
+        if (unlockMap[code] === undefined) unlockMap[code] = [];
+        if (unlockMap[code].indexOf(c.Course) === -1) unlockMap[code].push(c.Course);
+      });
+    });
+  });
+}
+
+$(document).ready(function() {
+  loadCatalog();
+});
+
+/*Building the course list */
+
+function createListAll() {
+  for (var i = 0; i < courselist.length; i++) {
+    addCourseToList(i);
+  }
+}
+
+function addCourseToList(i) {
+  var c = courselist[i];
+  var pr = formatPrereqs(i);
+  var un = unlockMap[c.Course];
+  var a = $('<div />', {
+    id: i.toString(),
+    class: 'classAvailable',
+    html: "<b>" + c.Course + "</b> " + c.Name +
+      "<br/><small>" + c.offered + " &middot; " + groupLabels[c.group] + "</small>" +
+      "<br/><small>" + (pr ? "Prereqs: " + pr : "No prerequisites") + "</small>" +
+      (un ? "<br/><small><i>Needed for: " + un.join(", ") + "</i></small>" : "") +
+      "<span class='tooltiptext'>" + c.details + "</span>"
+  });
+  $("#all").append(a);
+  // Every course starts draggable; checkPrerequisites disables the blocked ones
+  $('#' + i).draggable({
+    start: function() { startDrag = $(this).position(); }
+  });
+}
+
+/* ---------------- Drop targets ---------------- */
+
+function setDropTargets() {
+  var _loop = function(sid) {
+    $('#semester' + sid).droppable({
+      drop: function(event, ui) { dropInSemester(ui, sid); }
+    });
+  };
+  for (var s = 1; s <= NUM_SEMESTERS; s++) _loop(s);
+
+  $('#completed').droppable({
+    drop: function(event, ui) {
+      var cid = parseInt(ui.draggable.attr('id'));
+      courselist[cid].taken = true;
+      semesters[0].push(cid);
+      undolist.push({ course: cid, semester: 0 });
+      $('#completedclasses').html(semesterPrint(0));
+      $('#' + cid).hide();
+      semesterHours[0] += courselist[cid].hours;
+      $("#CompletedHours").html("Hours Completed: " + semesterHours[0]);
+      updateEverything();
+    }
+  });
+}
+
+function dropInSemester(ui, sid) {
+  var cid = ui.draggable.attr('id');
+  if (!dropSemester(cid, sid)) {
+    // rejected - animate the course back where it came from
+    ui.draggable.animate({ top: 0, left: 0 }, "slow");
+  }
+}
+
+function dropSemester(cid, sid) {
+  var icid = parseInt(cid);
+  if (!okToTake(icid, sid)) return false;
+
+  courselist[icid].taken = true;
+  courselist[icid].semester = sid;
+  semesters[sid].push(icid);
+  undolist.push({ course: icid, semester: sid });
+  $("#semesterclasses" + sid).html(semesterPrint(sid));
+  $('#' + cid).hide();
+  semesterHours[sid] += courselist[icid].hours;
+  $('#semester' + sid + 'hours').html(semesterNames[sid] + " &mdash; Hours: " + semesterHours[sid]);
+  updateEverything();
+  return true;
+}
+
+/* ---------------- One refresh pass after any change ---------------- */
+
+function updateEverything() {
+  recount();
+  checkPrerequisites();
+  renderAudit();
+  $("#ProgramHours").html("Program Hours (" + GOAL_HOURS + " required): " + audit.total);
+}
+
+function recount() {
+  var placed = [];
+  for (var i = 0; i < courselist.length; i++) {
+    if (courselist[i].taken) placed.push(i);
+  }
+
+  var counted = {};      // id -> counts toward the goal
+  var groupCount = {};   // group -> credits counted for that group
+  var extras = [];       // placed but over the group quota
+
+  // selection groups with quotas
+  ["networking", "analytics", "cyber", "electives"].forEach(function(g) {
+    var ids = placed.filter(function(id) { return courselist[id].group === g; });
+    for (var k = 0; k < ids.length; k++) {
+      if (k < groupQuota[g]) {
+        counted[ids[k]] = true;
+        groupCount[g] = (groupCount[g] || 0) + courselist[ids[k]].hours;
+      } else {
+        extras.push(ids[k]);
+      }
+    }
+  });
+
+  // required core - no quota, everything placed counts
+  var coreCount = 0;
+  placed.forEach(function(id) {
+    if (courselist[id].group === "required") { counted[id] = true; coreCount += courselist[id].hours; }
+  });
+
+  // capstone: thesis wins if any thesis course is planned
+  var thesisTaken = placed.some(function(id) { return courselist[id].group === "thesis"; });
+  var capstone = 0;
+
+  if (thesisTaken) {
+    var t = placed.filter(function(id) { return courselist[id].group === "thesis"; });
+    for (var k = 0; k < t.length; k++) {
+      if (k < groupQuota.thesis) { counted[t[k]] = true; capstone += courselist[t[k]].hours; }
+      else extras.push(t[k]);
+    }
+  } else {
+    // dedicated non-thesis courses first, then any unselected course
+    // from the groups above fills a remaining slot
+    var dedicated = placed.filter(function(id) { return courselist[id].group === "nonthesis"; });
+    var spare = extras.slice();
+    extras = [];
+    var used = 0;
+    dedicated.forEach(function(id) {
+      if (used < groupQuota.nonthesis) { counted[id] = true; capstone += courselist[id].hours; used++; }
+    });
+    spare.forEach(function(id) {
+      if (used < groupQuota.nonthesis) { counted[id] = true; capstone += courselist[id].hours; used++; }
+      else extras.push(id);
+    });
+  }
+
+  var total = coreCount +
+    (groupCount.networking || 0) + (groupCount.analytics || 0) +
+    (groupCount.cyber || 0) + (groupCount.electives || 0) + capstone;
+
+  audit = {
+    counted: counted,
+    extras: extras,
+    groupCount: groupCount,
+    coreCount: coreCount,
+    capstone: capstone,
+    thesisTaken: thesisTaken,
+    total: total,
+    placed: placed
+  };
+}
+
+/* Would course i count toward the goal if it were placed right now?
+   Returns null (yes) or a short reason why not. Used for the audit
+   panel and the "What Can I Take?" list - cards are no longer grayed. */
+function wouldCountReason(i) {
+  var g = courselist[i].group;
+  if (g === "prereq" || g === "required") return null;
+
+  var thesisUsed = audit.thesisTaken ? audit.capstone / 3 : 0;
+
+  if (g === "thesis") {
+    if (audit.thesisTaken && thesisUsed >= groupQuota.thesis) return "both thesis enrollments already counted";
+    return null;
+  }
+  if (g === "nonthesis") {
+    if (audit.thesisTaken) return "thesis option is active";
+    if (audit.capstone >= groupQuota.nonthesis * 3) return "non-thesis capstone already filled";
+    return null;
+  }
+  if ((audit.groupCount[g] || 0) >= groupQuota[g] * 3) {
+    if (audit.thesisTaken) return groupLabels[g] + " already filled, thesis option active";
+    if (audit.capstone >= groupQuota.nonthesis * 3) return groupLabels[g] + " already filled, no non-thesis slot open";
+    return null; // can still fill a non-thesis slot
+  }
+  return null;
+}
+
+/* Green vs yellow: prerequisites met or not */
+function checkPrerequisites() {
+  for (var i = 0; i < courselist.length; i++) {
+    if (courselist[i].taken) continue; // placed courses are hidden
+
+    // clear BOTH classes first: a yellow card carries classNotAvailable,
+    // so removing only classAvailable would leave both on the card and
+    // the CSS yellow rule (defined last) would keep winning
+    $('#' + i.toString()).removeClass('classAvailable classNotAvailable');
+    if (prerequisitesMet(i)) {
+      $('#' + i.toString()).addClass('classAvailable').draggable('enable');
+    } else {
+      $('#' + i.toString()).addClass('classNotAvailable').draggable('disable');
+    }
+  }
+}
+
+/* Degree audit panel*/
+
+function renderAudit() {
+  var lines = [];
+
+  lines.push("<b>Degree Audit: " + audit.total + " / " + GOAL_HOURS + " credits</b>");
+
+  var missing = [];
+  for (var i = 0; i < courselist.length; i++) {
+    var c = courselist[i];
+    if (c.group === "required" && !c.taken) missing.push(c.Course);
+  }
+  lines.push("Required core: " + audit.coreCount + "/9" +
+    (missing.length ? " &mdash; still need " + missing.join(", ") : " &mdash; complete"));
+
+  ["networking", "analytics", "cyber", "electives"].forEach(function(g) {
+    var have = audit.groupCount[g] || 0;
+    lines.push(groupLabels[g].replace(" (", ": ").replace(")", "") + ": " + have + "/" + (groupQuota[g] * 3));
+  });
+
+  if (audit.thesisTaken) {
+    lines.push("Capstone (Thesis): " + audit.capstone + "/6");
+  } else {
+    lines.push("Capstone (Non-thesis): " + audit.capstone + "/6");
+  }
+
+  var prereqTotal = 0, prereqDone = 0;
+  for (var j = 0; j < courselist.length; j++) {
+    if (courselist[j].group === "prereq") { prereqTotal++; if (courselist[j].taken) prereqDone++; }
+  }
+  if (prereqTotal) lines.push("Track prerequisites completed: " + prereqDone + "/" + prereqTotal);
+
+  var warnings = buildWarnings();
+  var html = lines.join("<br/>");
+  if (warnings.length) {
+    html += "<br/><br/><b style='color:#b91c1c'>Warnings</b><br/>" + warnings.join("<br/>");
+  }
+  $("#auditbox").html(html);
+}
+
+function buildWarnings() {
+  var w = [];
+
+  // over-quota courses that don't count
+  audit.extras.forEach(function(id) {
+    var c = courselist[id];
+    w.push(c.Course + " does not count toward the " + GOAL_HOURS + " (its group is already filled)" +
+      (audit.thesisTaken ? "" : " - it could fill a non-thesis slot instead"));
+  });
+
+  // thesis and non-thesis mixed
+  if (audit.thesisTaken) {
+    var mixed = audit.placed.some(function(id) { return courselist[id].group === "nonthesis"; });
+    if (mixed) {
+      w.push("Thesis option is active - planned non-thesis courses do not count toward the capstone");
+    }
+  }
+
+  // a course marked taken whose prereqs are not in the plan
+  audit.placed.forEach(function(id) {
+    if (!prerequisitesMet(id)) {
+      w.push(courselist[id].Course + " is in the plan but its prerequisites are not");
+    }
+  });
+
+  return w;
+}
+
+/* ---------------- Prerequisite logic ---------------- */
+
+function prereqEntries(courseId) {
+  return courselist[courseId].PreReq || [];
+}
+
+function prerequisitesMet(courseId) {
+  var entries = prereqEntries(courseId);
+  for (var i = 0; i < entries.length; i++) {
+    var e = entries[i];
+    if (Array.isArray(e)) {
+      var any = false;
+      for (var k = 0; k < e.length; k++) {
+        if (isTaken(e[k])) { any = true; break; }
+      }
+      if (!any) return false;
+    } else if (!isTaken(e)) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function isTaken(prereq) {
+  for (var i = 0; i < courselist.length; i++) {
+    if (courselist[i].Course === prereq && courselist[i].taken === true) return true;
+  }
+  return false;
+}
+
+function okToTake(courseId, semesterId) {
+  // a course cannot be taken in the same semester as its prerequisites;
+  // for an OR group, none of the alternatives may be in that semester
+  var entries = prereqEntries(courseId);
+  var _courses = semesterCourses(semesterId);
+  var names = _courses.map(function(id) { return courselist[id].Course; });
+  for (var i = 0; i < entries.length; i++) {
+    var opts = Array.isArray(entries[i]) ? entries[i] : [entries[i]];
+    for (var k = 0; k < opts.length; k++) {
+      if (names.indexOf(opts[k]) !== -1) return false;
+    }
+  }
+  return true;
+}
+
+function semesterCourses(sid) {
+  var _courses = [];
+  for (var i = 0; i < courselist.length; i++) {
+    if (courselist[i].semester === sid) _courses.push(i);
+  }
+  return _courses;
+}
+
+/* Transitive prerequisites for a course: its direct prereqs plus
+   everything those require, recursively. OR groups are flattened
+   to every alternative. */
+function getAllPrerequisites(courseId) {
+  var result = [];
+  prereqEntries(courseId).forEach(function(e) {
+    var opts = Array.isArray(e) ? e : [e];
+    opts.forEach(function(code) {
+      if (result.indexOf(code) !== -1) return;
+      result.push(code);
+      var id = getIdFromCourseName(code);
+      if (id !== null) {
+        result = mergeArrays(result, getAllPrerequisites(id));
+      }
+    });
+  });
+  return result;
+}
+
+function formatPrereqs(courseId) {
+  var entries = prereqEntries(courseId);
+  if (!entries.length) return null;
+  return entries.map(function(e) {
+    return Array.isArray(e) ? e.join(" OR ") : e;
+  }).join(" AND ");
+}
+
+function mergeArrays(a1, a2) {
+  for (var i = 0; i < a2.length; i++) {
+    if (a1.indexOf(a2[i]) === -1) a1.push(a2[i]);
+  }
+  return a1;
+}
+
+function getIdFromCourseName(courseName) {
+  for (var i = 0; i < courselist.length; i++) {
+    if (courselist[i].Course === courseName) return i;
+  }
+  return null;
+}
+
+/* ---------------- Undo ---------------- */
+
+function executeUndo() {
+  if (undolist.length === 0) return;
+  var a = undolist.pop();
+  var cid = a.course;
+  var sid = a.semester;
+  semesters[sid].pop();
+  courselist[cid].taken = false;
+  courselist[cid].semester = 0;
+  $('#' + cid).show().css({ top: '0px', left: '0px' });
+  semesterHours[sid] -= courselist[cid].hours;
+  if (sid === 0) {
+    $("#completedclasses").html(semesterPrint(0));
+    $("#CompletedHours").html("Hours Completed: " + semesterHours[0]);
+  } else {
+    $("#semesterclasses" + sid).html(semesterPrint(sid));
+    $('#semester' + sid + 'hours').html(semesterNames[sid] + " &mdash; Hours: " + semesterHours[sid]);
+  }
+  updateEverything();
+}
+
+/* ---------------- Printing helpers ---------------- */
+
+function whatCanITake() {
+  recount();
+  var str = "<b>Degree Audit - " + audit.total + " / " + GOAL_HOURS + " credits</b><br/><br/>";
+
+  var missing = [];
+  for (var i = 0; i < courselist.length; i++) {
+    if (courselist[i].group === "required" && !courselist[i].taken) missing.push(i);
+  }
+  str += "<b>Required core (9 credits)</b><br/>";
+  if (missing.length === 0) {
+    str += "All required courses are in the plan.<br/><br/>";
+  } else {
+    missing.forEach(function(id) {
+      if (prerequisitesMet(id)) {
+        str += coursePrint(id) + "<br/>";
+      } else {
+        str += coursePrint(id) + " <i>(prerequisites not yet met)</i><br/>";
+      }
+    });
+    str += "<br/>";
+  }
+
+  ["networking", "analytics", "cyber", "electives"].forEach(function(g) {
+    var have = (audit.groupCount[g] || 0) / 3;
+    str += "<b>" + groupLabels[g] + "</b> - " + have + " of " + groupQuota[g] + " selected<br/>";
+    if (have < groupQuota[g]) {
+      for (var i = 0; i < courselist.length; i++) {
+        if (courselist[i].group === g && !courselist[i].taken) {
+          str += " &nbsp; " + coursePrint(i) +
+            (prerequisitesMet(i) ? "" : " <i>(prerequisites not yet met)</i>") + "<br/>";
+        }
+      }
+    }
+    str += "<br/>";
+  });
+
+  str += "<b>Capstone: " + (audit.thesisTaken ? "Thesis" : "Non-thesis") + " option</b> - " +
+    audit.capstone + "/6 credits<br/>";
+  if (!audit.thesisTaken && audit.capstone < groupQuota.nonthesis * 3) {
+    for (var j = 0; j < courselist.length; j++) {
+      var g = courselist[j].group;
+      var eligible = (g === "nonthesis" || g === "thesis" || wouldCountReason(j) === null) &&
+        !courselist[j].taken && g !== "prereq" && g !== "required";
+      if (eligible) {
+        str += " &nbsp; " + coursePrint(j) +
+          (prerequisitesMet(j) ? "" : " <i>(prerequisites not yet met)</i>") + "<br/>";
+      }
+    }
+  }
+  return str;
+}
+
+function semesterPrint(sid) {
+  var s = "";
+  for (var i = 0; i < semesters[sid].length; i++) {
+    s += coursePrint(semesters[sid][i]) + "<br/>";
+  }
+  return s;
+}
+
+function coursePrint(cid) {
+  return courselist[cid].Course + " " + courselist[cid].Name;
+}
+
+function printProgram() {
+  var str = "<h2>Program of Study - " + catalog.program.name + "</h2>";
+  str += "<table><tr><td>";
+  str += "<b>Summary of Completed Hours</b></br>";
+  str += $("#CompletedHours").html() + "<br/>";
+  str += $("#auditbox").html() + "<br/>";
+  str += whatCanITake();
+  str += "</td><td><b>Semester Course Plan</b><br/>";
+  for (var s = 1; s <= NUM_SEMESTERS; s++) {
+    str += "<b>" + semesterNames[s] + " - Hours: " + semesterHours[s] + "</b><br/>";
+    str += semesterPrint(s) + "<br/>";
+  }
+  str += "</td></tr></table>";
+  var aWindow = window.open("data:text/html;charset=utf-8," + str, "", "_blank");
+  aWindow.print();
+}
+</script>
+
+</body>
+</html>
