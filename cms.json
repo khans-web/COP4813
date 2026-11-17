@@ -1,0 +1,116 @@
+{
+  "title": "CMS Comparison",
+  "cms": [
+    {
+      "name": "WordPress",
+      "support": "Open Source (GPL), community-supported",
+      "technology": "PHP / MySQL (database layer); browser-based admin (client layer)",
+      "capabilities": [
+        "Supports themes and plugins (60,000+ free plugins)",
+        "Public REST API",
+        "Block editor (Gutenberg)",
+        "Media management",
+        "Multisite networks",
+        "Full control over code and hosting",
+        "Large community for support"
+      ],
+      "limitations": [
+        "Security depends heavily on plugins, which must be vetted and kept updated",
+        "Requires frequent core/theme/plugin updates and self-managed hosting",
+        "Performance can degrade with too many plugins",
+        "The most-targeted CMS for attacks"
+      ],
+      "example": { "site": "whitehouse.gov", "url": "https://whitehouse.gov" },
+      "source": {
+        "label": "Elementor - WordPress site examples of big brands",
+        "url": "https://elementor.com/blog/wordpress-site-examples-of-big-brands/"
+      }
+    },
+    {
+      "name": "Shopify",
+      "support": "Supported by Shopify, a proprietary (closed-source) company",
+      "technology": "Ruby on Rails with Liquid templating; hosted cloud (no self-hosting); JavaScript/React storefronts",
+      "capabilities": [
+        "Hosted e-commerce with payments and POS built in",
+        "Themes",
+        "Large app store",
+        "APIs for custom storefronts"
+      ],
+      "limitations": [
+        "Closed source",
+        "Transaction fees unless using Shopify Payments",
+        "Monthly app costs add up",
+        "Less customizable than self-hosted CMS"
+      ],
+      "example": { "site": "gymshark.com", "url": "https://www.gymshark.com" },
+      "source": {
+        "label": "Shopify - Gymshark case study",
+        "url": "https://www.shopify.com/case-studies/gymshark"
+      }
+    },
+    {
+      "name": "Squarespace",
+      "support": "Supported by Squarespace, a proprietary (closed-source) company",
+      "technology": "Closed-source hosted stack; JSON template system; browser-based editor (client layer)",
+      "capabilities": [
+        "Award-winning templates",
+        "Drag-and-drop editor",
+        "Built-in e-commerce, blogging and analytics"
+      ],
+      "limitations": [
+        "No plugin ecosystem (limited extensions only)",
+        "Can't export a full site to another host",
+        "Less developer control"
+      ],
+      "example": { "site": "wholefoodsmarket.com", "url": "https://wholefoodsmarket.com" },
+      "source": {
+        "label": "TechnologyChecker - Squarespace",
+        "url": "https://technologychecker.io/technology/squarespace"
+      }
+    },
+    {
+      "name": "Drupal",
+      "support": "Open Source (GPL), community-supported by the Drupal Association",
+      "technology": "PHP on the Symfony framework / MySQL or PostgreSQL; Twig templating; browser-based admin",
+      "capabilities": [
+        "Highly customizable content modeling",
+        "Modules",
+        "Granular user access control",
+        "Multilingual built in",
+        "Enterprise-grade scalability"
+      ],
+      "limitations": [
+        "Steep learning curve",
+        "Usually needs a developer",
+        "Fewer themes and modules than WordPress",
+        "Costlier to build and maintain"
+      ],
+      "example": { "site": "nasa.gov", "url": "https://www.nasa.gov" },
+      "source": {
+        "label": "Zyxware - 16 organization websites built using Drupal",
+        "url": "https://www.zyxware.com/article/6431/16-organization-websites-built-using-drupal"
+      }
+    },
+    {
+      "name": "Joomla",
+      "support": "Open Source (GPL), community-supported",
+      "technology": "PHP / MySQL (MariaDB supported); MVC architecture; browser-based admin",
+      "capabilities": [
+        "Extensions and templates",
+        "Built-in multilingual support",
+        "User access-control levels",
+        "No plugin fees"
+      ],
+      "limitations": [
+        "Smaller extension marketplace and community than WordPress",
+        "Updates can break extensions",
+        "Harder for beginners than hosted builders"
+      ],
+      "example": { "site": "linux.com", "url": "https://www.linux.com" },
+      "source": {
+        "label": "Joomla Community - Interview about Linux.com",
+        "url": "https://community.joomla.org/blogs/community/linuxcom.html"
+      }
+    }
+  ]
+}
